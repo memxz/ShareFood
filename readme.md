@@ -1,4 +1,4 @@
-# Github repo ground Rules
+# Github Repo Ground Rules
 
 1. Merging changes to sub-main
    
