@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF"
+    tools:context=".SignupActivity">
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="80dp"
+        android:layout_gravity="center"
+        android:src="@drawable/tubiao" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:text="Account"
+            android:textColor="@color/colorBlack"
+            android:textSize="20dp" />
+
+        <EditText
+            android:id="@+id/et_newAccount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center"
+            android:layout_marginStart="88dp"
+            android:layout_marginEnd="88dp"
+            android:layout_marginBottom="0dp"
+            android:hint="Email"
+            android:gravity="center"
+            android:inputType="text"
+            android:textCursorDrawable="@drawable/shape_et_cursor_color"
+            android:theme="@style/MyEditText"
+            tools:ignore="TouchTargetSizeCheck" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:text="Password"
+        android:textColor="@color/colorBlack"
+        android:textSize="20dp" />
+
+        <EditText
+            android:id="@+id/et_newpwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="88dp"
+            android:layout_marginEnd="88dp"
+            android:layout_marginBottom="0dp"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:gravity="center"
+            android:textCursorDrawable="@drawable/shape_et_cursor_color"
+            android:theme="@style/MyEditText"
+            tools:ignore="TouchTargetSizeCheck" />
+    </RelativeLayout>
+
+    <Button
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center"
+        android:background="@drawable/login_bt_shape"
+        android:id="@+id/btn_signupnew"
+        android:layout_width="310dp"
+        android:layout_height="wrap_content"
+        android:text="Register" />
+
+</LinearLayout>

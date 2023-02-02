@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_call"
+        android:icon="@drawable/health"
+        android:title="健康小提示" />
+    <item
+        android:id="@+id/nav_friends"
+        android:icon="@drawable/wenanbiaoti"
+        android:title="文案" />
+<!--    <item-->
+<!--        android:id="@+id/nav_location"-->
+<!--        android:icon="@drawable/ic_baseline_person_outline_24"-->
+<!--        android:title="个人资料" />-->
+    <item
+        android:id="@+id/nav_mail"
+        android:icon="@drawable/ic_baseline_mail_24"
+        android:title="疫情助手" />
+    <item
+        android:id="@+id/nav_tuichu"
+        android:icon="@drawable/ic_baseline_arrow_back_24"
+        android:title="返回" />
+
+</menu>

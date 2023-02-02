@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="150dp"
+    android:background="@drawable/shape_10dp_top_corners">
+
+    <TextView
+        android:id="@+id/Tiele"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="Gental Reminder"
+        android:textSize="18dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/next"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Tiele"
+        android:gravity="center"
+        android:text="In order to proceed，Pls read and agree" />
+
+    <TextView
+        android:id="@+id/futk2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/next"
+        android:layout_marginLeft="67dp"
+        android:text="《Conditions》"
+        android:textColor="@color/purple_500" />
+
+    <TextView
+        android:id="@+id/yszc2"
+        android:textColor="@color/purple_500"
+        android:layout_below="@id/next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="155dp"
+        android:text="《Terms》" />
+
+    <Button
+        android:id="@+id/btn_disagr"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/next"
+        android:layout_marginLeft="28dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/login_bt_shape"
+        android:text="Disagree" />
+
+    <Button
+        android:id="@+id/btn_agre"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/next"
+        android:layout_marginLeft="220dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/login_bt_shape"
+        android:text="Agree" />
+    <TextView
+        android:layout_below="@id/btn_agre"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"/>
+
+</RelativeLayout>
