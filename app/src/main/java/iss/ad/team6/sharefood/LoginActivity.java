@@ -201,7 +201,7 @@ public class LoginActivity extends AppCompatActivity
                 //输入检测：如果有一个为空，则提示不能登录
                 if(username.equals("")||password.equals(""))
                 {
-                    Toast.makeText(LoginActivity.this,"账号和密码不能为空",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this,"Account or Password cannot be blank",Toast.LENGTH_SHORT).show();
                 }
 
                 else
@@ -259,9 +259,9 @@ public class LoginActivity extends AppCompatActivity
             MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
 
             Request request = new Request.Builder()
-                    .url("https://8094de54-7fbc-4762-bfe8-9a8dfbd29834.mock.pstmn.io/user/login"+ urlParam)
+                    .url("https://8094de54-7fbc-4762-bfe8-9a8dfbd29834.mock.pstmn.io/login"+ urlParam)
                     // 将请求头加至请求中
-                    //.headers(headers)
+                    .headers(headers)
                     .post(RequestBody.create(MEDIA_TYPE_JSON, ""))
                     .build();
 
@@ -289,7 +289,7 @@ public class LoginActivity extends AppCompatActivity
         {
             ResponseBody responseBody = response.body();
             body = responseBody.string();
-            Log.d("LoginActivity_登录", "响应体 : " + body);
+            Log.d("LoginActivity_Login", "Response_body : " + body);
 
             if (response.isSuccessful()) {
                 runOnUiThread(() -> {
@@ -298,16 +298,16 @@ public class LoginActivity extends AppCompatActivity
                     user = responseParse.getUser();
                     Message message = new Message();
                     switch (responseParse.getMsg()) {
-                        case "登录成功":
+                        case "Login Successfully":
                             message.arg1 = 1;
                             break;
-                        case "密码错误":
+                        case "Wrong Password":
                             message.arg1 = 2;
                             break;
-                        case "当前登录用户不存在":
+                        case "Current User is not existed":
                             message.arg1 = 3;
                             break;
-                        case "必传字段不能为空":
+                        case "Input Can Not Be Blank":
                             message.arg1 = 4;
                             break;
                         default:
@@ -335,13 +335,13 @@ public class LoginActivity extends AppCompatActivity
                 startActivity(intent);
             }
             if (msg.arg1 == 2)
-                Toast.makeText(LoginActivity.this, "密码错误!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Wrong Password!", Toast.LENGTH_SHORT).show();
             if (msg.arg1 == 3)
-                Toast.makeText(LoginActivity.this, "用户不存在!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "user is Not Existed!", Toast.LENGTH_SHORT).show();
             if (msg.arg1 == 4)
-                Toast.makeText(LoginActivity.this, "账号或密码不能为空!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Account or Password cannot be blank!", Toast.LENGTH_SHORT).show();
             if (msg.arg1 == -1)
-                Toast.makeText(LoginActivity.this, "网络连接失败!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Network Connection Error!", Toast.LENGTH_SHORT).show();
         }
     };
 

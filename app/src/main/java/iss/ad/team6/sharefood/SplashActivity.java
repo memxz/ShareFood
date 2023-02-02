@@ -19,10 +19,12 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 
+import iss.ad.team6.sharefood.Gson.Constant;
 import iss.ad.team6.sharefood.Gson.Gson_User;
 import iss.ad.team6.sharefood.Gson.Persons;
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.Headers;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -44,7 +46,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         lottieAnimationView = findViewById(R.id.sp_lottieAnimationView);
-        lottieAnimationView.loop(true);
+        //lottieAnimationView.loop(true);
         // 开始播放动画
         lottieAnimationView.playAnimation();
         sp = PreferenceManager.getDefaultSharedPreferences(this);
@@ -66,17 +68,17 @@ public class SplashActivity extends AppCompatActivity {
             SystemClock.sleep(2000);//等待2秒钟
             String urlParam = "?" + "&password=" + password + "&username=" + username;
             Log.d("url",urlParam);
-//            Headers headers = new Headers.Builder()
-//                    .add("appId", Constant.APPID)
-//                    .add("appSecret", Constant.APPSECRET)
-//                    .add("Accept", "application/json, text/plain, */*")
-//                    .build();
+            Headers headers = new Headers.Builder()
+                    .add("appId", Constant.APPID)
+                    .add("appSecret", Constant.APPSECRET)
+                    .add("Accept", "application/json, text/plain, */*")
+                    .build();
             MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
 
             Request request = new Request.Builder()
                     .url("http://47.107.52.7:88/member/photo/user/login"+ urlParam)
                     // 将请求头加至请求中
-                   // .headers(headers)
+                    .headers(headers)
                     .post(RequestBody.create(MEDIA_TYPE_JSON, ""))
                     .build();
 
@@ -104,7 +106,7 @@ public class SplashActivity extends AppCompatActivity {
         {
             ResponseBody responseBody = response.body();
             body = responseBody.string();
-            Log.d("LOG - 登录", "响应体 : " + body);
+            Log.d("LOG - Login", "Response_Body : " + body);
 
             if (response.isSuccessful()) {
                 runOnUiThread(() -> {
@@ -113,16 +115,16 @@ public class SplashActivity extends AppCompatActivity {
                     user = responseParse.getUser();
                     Message message = new Message();
                     switch (responseParse.getMsg()) {
-                        case "登录成功":
+                        case "Login Successfully":
                             message.arg1 = 1;
                             break;
-                        case "密码错误":
+                        case "Wrong Password":
                             message.arg1 = 2;
                             break;
-                        case "当前登录用户不存在":
+                        case "Current User is not existed":
                             message.arg1 = 3;
                             break;
-                        case "必传字段不能为空":
+                        case "Input Can Not Be Blank":
                             message.arg1 = 4;
                             break;
                         default:
@@ -137,7 +139,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private final Handler mLoginHandler = new Handler(Looper.getMainLooper()) {
         public void handleMessage(Message msg) {
-                Intent intent3 = new Intent(SplashActivity.this, Persons.Menu_Activity.class);
+                Intent intent3 = new Intent(SplashActivity.this, Menu_Activity.class);
                 intent3.putExtra("userInfo",body);
                 startActivity(intent3);
         }

@@ -22,7 +22,7 @@ public class Menu_Activity extends AppCompatActivity
      */
     private ActivityMenuBinding binding;
 
-    private String userId=null;
+    private Long userId;
     private String username=null;
     private String userInfo=null;
     private String userHeadimg;
@@ -32,7 +32,7 @@ public class Menu_Activity extends AppCompatActivity
         return userInfo;
     }
 
-    public String getUserId()
+    public Long getUserId()
     {
         return userId;
     }
@@ -58,7 +58,6 @@ public class Menu_Activity extends AppCompatActivity
         BottomNavigationView navView = findViewById(R.id.nav_view);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.navigation_photodiscovery,R.id.navigation_home,R.id.navigation_myshare).build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_menu);
-//        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
 
     }
@@ -69,7 +68,7 @@ public class Menu_Activity extends AppCompatActivity
         Persons userData=gson.fromJson(userInfo,Persons.class);
         Gson_User user=userData.getUser();
         userHeadimg=user.getAvatar();
-        userId=user.getId();
-        username=user.getUsername();
+        userId=user.getUserId();
+        username=user.getUserName();
     }
 }

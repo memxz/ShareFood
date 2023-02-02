@@ -75,7 +75,7 @@ public class SignupActivity extends AppCompatActivity
         new Thread(() -> {
 
             // url路径
-            String url = "http://47.107.52.7:88/member/photo/user/register";
+            String url = "https://8094de54-7fbc-4762-bfe8-9a8dfbd29834.mock.pstmn.io/signup";
             Gson gson=new Gson();
             // 请求头
             Headers headers = new Headers.Builder()
@@ -131,7 +131,7 @@ public class SignupActivity extends AppCompatActivity
                 if(body.getCode()==200)
                 {
                     Looper.prepare();
-                    Toast.makeText(SignupActivity.this,"注册成功！",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignupActivity.this,"Register Successfully！",Toast.LENGTH_SHORT).show();
                     Intent intent=new Intent();
                     intent.setClass(SignupActivity.this, LoginActivity.class);
                     startActivity(intent);
@@ -140,7 +140,7 @@ public class SignupActivity extends AppCompatActivity
                 else if(body.getCode()==500)
                 {
                     Looper.prepare();
-                    Toast.makeText(SignupActivity.this,"该用户已存在！",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignupActivity.this,"This Account has been registered！",Toast.LENGTH_SHORT).show();
                     Looper.loop();
                 }
             }
