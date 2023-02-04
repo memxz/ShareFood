@@ -4,12 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.InputType;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -31,11 +36,16 @@ import okhttp3.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private final String loginUrl="https://8094de54-7fbc-4762-bfe8-9a8dfbd29834.mock.pstmn.io/authenticate/login";
+    private final String loginUrl="https://8094de54-7fbc-4762-bfe8-9a8dfbd29834.mock.pstmn.io/authenticate/login";//https://card-service-cloudrun-lmgpq3qg3a-et.a.run.app/card-service/api/dummy/authenticate";
     private EditText edit_name,edit_psd;
     private CheckBox checkBox;
     private Button btn;
     private SharedPreferences pref;
+    private ImageView img_del;
+    private ImageView img_del2;
+    private ImageView ivPwdSwitch;
+    private Boolean bPwdSwitch=false;
+    private TextView registerAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +59,71 @@ public class LoginActivity extends AppCompatActivity {
         checkBox= (CheckBox) findViewById(R.id.login_recall);
         edit_name=(EditText) findViewById(R.id.name);
         edit_psd= (EditText) findViewById(R.id.password);
+        ivPwdSwitch=findViewById(R.id.iv_pwd_switch);//密码是否可见
+        img_del = findViewById(R.id.iv_et_num_delete);//清空账号栏的EditText
+        img_del2 = findViewById(R.id.iv_et_pwd_delete);//清空密码栏的EditText
+        registerAccount = findViewById(R.id.registered_account);//注册按钮
         btn=(Button)findViewById(R.id.btn_login) ;
 
         output();
 
+        /**
+         * Listen to Signup Click event
+         */
+//        registerAccount.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //跳转活动
+//                Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+
+        /**
+         * 清空账号栏的EditText监听事件
+         */
+        img_del.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                edit_name.setText("");
+            }
+        });
+
+        /**
+         * 清空密码栏的EditText监听事件
+         */
+        img_del2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                edit_psd.setText("");
+            }
+        });
+
+
+        /**
+         * 密码是否可见的监听事件
+         */
+        ivPwdSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bPwdSwitch = !bPwdSwitch;
+                if(bPwdSwitch)
+                {
+                    ivPwdSwitch.setImageResource(R.drawable.ic_baseline_visibility_24);
+                    edit_psd.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                }
+                else
+                {
+                    ivPwdSwitch.setImageResource(R.drawable.ic_baseline_visibility_off_24);
+                    //输入一个密码或者 输入类型为普通文本
+                    edit_psd.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD|InputType.TYPE_CLASS_TEXT);
+                    //设置字体样式
+                    edit_psd.setTypeface(Typeface.DEFAULT);
+                }
+            }
+        });
+
+        //Listen to Login btn Click event
         btn.setOnClickListener((new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -68,8 +139,8 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         }));
-
     }
+
 
     private void login(String account,String password){
 
@@ -113,29 +184,37 @@ public class LoginActivity extends AppCompatActivity {
                 Log.d("111111 post Request Success =====","Response Data: "+responseData);
                 Log.d("111111 post Request Success =====","Response Stream: "+responseStream);
 
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        LoginBean bean=new Gson().fromJson(responseData,LoginBean.class);
-                        Log.d("111111 Request Success =====","getAccess_token: "+bean.getData().getAccess_token());
 
-                        pref=getSharedPreferences("loginsp",MODE_PRIVATE);
-                        SharedPreferences.Editor editor=pref.edit();
-                        editor.putString("token",bean.getData().getAccess_token());
-                        editor.commit();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(!TextUtils.isEmpty(responseData)){
+                                LoginBean bean=new Gson().fromJson(responseData,LoginBean.class);
+                                Log.d("111111 Request Success =====","getAccess_token: "+bean.getData().getAccess_token());
 
-                        Log.d("111111 main activity >>>","getAccess_token: "+pref.getString("token",""));
+                                pref=getSharedPreferences("loginsp",MODE_PRIVATE);
+                                SharedPreferences.Editor editor=pref.edit();
+                                editor.putString("token",bean.getData().getAccess_token());
+                                editor.commit();
 
-                        input();
+                                Log.d("111111 main activity >>>","getAccess_token: "+pref.getString("token",""));
 
-                        Intent intent=new Intent(LoginActivity.this, MainActivity.class);
+                                input();
+
+                                Intent intent=new Intent(LoginActivity.this, MainActivity.class);
 
 
-                        startActivity(intent);
+                                startActivity(intent);
 
-                        finish();
-                    }
-                });
+                                finish();
+                            } else{
+                                Toast.makeText(LoginActivity.this,
+                                        "User account or Password Wrong！",
+                                        Toast.LENGTH_SHORT).show();}
+                        }
+
+                    });
+
 
             }
         });
