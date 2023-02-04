@@ -190,11 +190,11 @@ public class LoginActivity extends AppCompatActivity {
                         public void run() {
                             if(!TextUtils.isEmpty(responseData)){
                                 LoginBean bean=new Gson().fromJson(responseData,LoginBean.class);
-                                Log.d("111111 Request Success =====","getAccess_token: "+bean.getData().getAccess_token());
+                                Log.d("111111 Request Success =====","getEmail: "+bean.getEmail());
 
                                 pref=getSharedPreferences("loginsp",MODE_PRIVATE);
                                 SharedPreferences.Editor editor=pref.edit();
-                                editor.putString("token",bean.getData().getAccess_token());
+                                editor.putString("token","123456");//bean.getData().getAccess_token());//Hardcode token since simple the entity
                                 editor.commit();
 
                                 Log.d("111111 main activity >>>","getAccess_token: "+pref.getString("token",""));

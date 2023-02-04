@@ -2,53 +2,83 @@ package iss.ad.team6.sharefood.bean;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.time.LocalDate;
+
 public class LoginBean {
-    private int code;
-    private Object msg;
-    private DataBean data;
+    @SerializedName("userId")
+    private Long userId;
 
-    public int getCode() {
-        return code;
+    @SerializedName("userName")
+    private String userName;
+
+    @SerializedName("password")
+    private String pwd;
+
+    @SerializedName("email")
+    private String email;
+
+    @SerializedName("phone")
+    private String phone;
+
+    @SerializedName("salary")
+    private Double salary;
+
+    @SerializedName("level")
+    private String level;
+
+    @SerializedName("points")
+    private int points;
+
+    @SerializedName("birth")
+    private LocalDate birth;
+
+    @SerializedName("role")
+    private Role role;
+
+    //add one more attribute
+//    @SerializedName("avatar")//头像
+//    private String avatar;
+//    public String getAvatar() {
+//        return avatar;
+//    }
+
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setCode(int code) {
-        this.code = code;
+    public String getUserName() {
+        return userName;
     }
 
-    public Object getMsg() {
-        return msg;
+    public String getPwd() {
+        return pwd;
     }
 
-    public void setMsg(Object msg) {
-        this.msg = msg;
+    public String getEmail() {
+        return email;
     }
 
-    public DataBean getData() {
-        return data;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setData(DataBean data) {
-        this.data = data;
+    public Double getSalary() {
+        return salary;
     }
 
-    public static class DataBean{
-        private String access_token;
-        private int expires_in;
+    public String getLevel() {
+        return level;
+    }
 
-        public String getAccess_token() {
-            return access_token;
-        }
+    public int getPoints() {
+        return points;
+    }
 
-        public void setAccess_token(String access_token) {
-            this.access_token = access_token;
-        }
+    public LocalDate getBirth() {
+        return birth;
+    }
 
-        public int getExpires_in() {
-            return expires_in;
-        }
-
-        public void setExpires_in(int expires_in) {
-            this.expires_in = expires_in;
-        }
+    public Role getRole() {
+        return role;
     }
 }
