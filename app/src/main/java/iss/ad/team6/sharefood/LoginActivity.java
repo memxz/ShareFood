@@ -70,14 +70,14 @@ public class LoginActivity extends AppCompatActivity {
         /**
          * Listen to Signup Click event
          */
-//        registerAccount.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                //跳转活动
-//                Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
-//                startActivity(intent);
-//            }
-//        });
+        registerAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //跳转活动
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
 
         /**
          * 清空账号栏的EditText监听事件

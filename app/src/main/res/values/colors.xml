@@ -8,5 +8,16 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="colorBlack">#FF000000</color>
-
+    <color name="text_main_color">#1B4817</color>
+    <color name="text_main_color_light">#3B1B4817</color>
+    <color name="second_color">#666666</color>
+    <color name="three_color">#999999</color>
+    <color name="main_color">#4381FF</color>
+    <color name="line_color">#EAEAEA</color>
+    <color name="transparent">#00000000</color>
+    <color name="gray_color">#e6e6e6</color>
+    <color name="home_top_bg_color">#2574FF</color>
+    <color name="attention_item_bg">#EEEEEF</color>
+    <color name="border_select_color">#FFB46B</color>
+    <color name="bg_color">#FAF9FC</color>
 </resources>
