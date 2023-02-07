@@ -49,8 +49,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
         String url = Api.baseUrl + Api.api_register;
         Map<String, String> params = new HashMap<>();
-        params.put("username", userName);
-        params.put("pwd", password);
+        params.put("userName", userName);
+        params.put("password", password);
         params.put("phone", phone);
         params.put("email", email);
         params.put("salary", salary);

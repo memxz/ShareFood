@@ -12,7 +12,7 @@ public class LoginBean {
     private String userName;
 
     @SerializedName("password")
-    private String pwd;
+    private String password;
 
     @SerializedName("email")
     private String email;
@@ -28,9 +28,6 @@ public class LoginBean {
 
     @SerializedName("points")
     private int points;
-
-    @SerializedName("birth")
-    private LocalDate birth;
 
     @SerializedName("role")
     private Role role;
@@ -50,8 +47,8 @@ public class LoginBean {
         return userName;
     }
 
-    public String getPwd() {
-        return pwd;
+    public String getPassword() {
+        return password;
     }
 
     public String getEmail() {
@@ -72,10 +69,6 @@ public class LoginBean {
 
     public int getPoints() {
         return points;
-    }
-
-    public LocalDate getBirth() {
-        return birth;
     }
 
     public Role getRole() {

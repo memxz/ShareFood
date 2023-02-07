@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         public  void logout(View view){
-            SharedPreferences sharedpreferences = getSharedPreferences("mypsd", Context.MODE_PRIVATE);
+            SharedPreferences sharedpreferences = getSharedPreferences("loginsp", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.clear();
             editor.apply();
