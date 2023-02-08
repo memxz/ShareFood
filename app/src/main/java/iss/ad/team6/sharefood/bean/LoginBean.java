@@ -29,9 +29,6 @@ public class LoginBean {
     @SerializedName("points")
     private int points;
 
-    @SerializedName("birth")
-    private LocalDate birth;
-
     @SerializedName("role")
     private Role role;
 
@@ -72,10 +69,6 @@ public class LoginBean {
 
     public int getPoints() {
         return points;
-    }
-
-    public LocalDate getBirth() {
-        return birth;
     }
 
     public Role getRole() {
