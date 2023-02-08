@@ -20,7 +20,7 @@ public class Menu_Activity extends AppCompatActivity implements
         ListFragment.IListFragment
 {
     /**
-     * 视图绑定类 对象
+     * view binding class
      */
     private ActivityMenuBinding binding;
 
@@ -35,9 +35,9 @@ public class Menu_Activity extends AppCompatActivity implements
         Intent intent=getIntent();
         userInfo=intent.getStringExtra("userInfo");
         setUserData();
-        // 1 . 获取视图绑定类
+        // 1 . get view binding class
         binding = ActivityMenuBinding.inflate(getLayoutInflater());
-        // 2 . 关联视图绑定类 与 Activity
+        // 2 . Link view binding class with Activity
         setContentView(binding.getRoot());
         BottomNavigationView navView = findViewById(R.id.nav_view);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.navigation_photodiscovery).build();//R.id.navigation_home,R.id.navigation_myshare).build();
