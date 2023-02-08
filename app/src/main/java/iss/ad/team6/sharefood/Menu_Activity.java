@@ -61,7 +61,7 @@ public class Menu_Activity extends AppCompatActivity implements
     }
 
     void startDetailActivity(int newItemId) {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, FoodDetailActivity.class);
         intent.putExtra("itemId", newItemId);
         startActivity(intent);
     }

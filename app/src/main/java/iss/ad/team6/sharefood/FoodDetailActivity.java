@@ -1,8 +1,5 @@
 package iss.ad.team6.sharefood;
 
-import static com.example.pictureshare2.Gson.Constant.APPID;
-import static com.example.pictureshare2.Gson.Constant.APPSECRET;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -20,14 +17,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.example.pictureshare2.Gson.Constant;
-import com.example.pictureshare2.Gson.Gson_Base;
-import com.example.pictureshare2.Gson.Gson_Photo;
-import com.example.pictureshare2.Gson.Gson_PhotoDetails;
 import com.google.gson.Gson;
 
 import java.io.IOException;
 
+import iss.ad.team6.sharefood.bean.FoodBean;
+import iss.ad.team6.sharefood.bean.FoodType;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Headers;
@@ -39,9 +34,9 @@ import okhttp3.Response;
 import uk.co.senab.photoview.PhotoView;
 
 /**
- * 点击图片的详情页
+ * Click image to view detail
  */
-public class FoodDetailActivity extends AppCompatActivity  {
+public class FoodDetailActivity extends AppCompatActivity {
     private String userId;
     private String shareId;
     private String userHeadimg;
@@ -57,24 +52,32 @@ public class FoodDetailActivity extends AppCompatActivity  {
     private String username;
     private String content;
     private String imageUrl;
-    Gson_Photo photodetails;
     private boolean islike = false;
     private boolean isCollect = false;
     private ImageView iv_collect;
+    private TextView tv_listDays;
+    private TextView tv_foodType;
+    private TextView tv_available;
     Bitmap bitmap;
     private String pl_username;
     private String puserid;
+    private String foodId;
+    private FoodBean responseData;
+    private String available;
+    private String listDays;
+    private String foodType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_photo_details);
+        setContentView(R.layout.activity_fooddetail);
         Intent intent = getIntent();
-        //从  PhotoDiscoveryFragment这个类里面取值过来
+        //Get value From  List_Fragment
         userId = intent.getStringExtra("userId");
-        shareId = intent.getStringExtra("shareId");
-        userHeadimg = intent.getStringExtra("userHeadimg");
-        pl_username = intent.getStringExtra("discover_username");
+        foodId = intent.getStringExtra("foodId");
+//        shareId = intent.getStringExtra("shareId");
+//        userHeadimg = intent.getStringExtra("userHeadimg");
+//        pl_username = intent.getStringExtra("discover_username");
         initView();
         get();
         initData();
@@ -82,40 +85,37 @@ public class FoodDetailActivity extends AppCompatActivity  {
 
     private void initView() {
         /**
-         * 隐藏状态栏
+         * Hide status
          */
         View decorView = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);
-        //标题
+        //Title
         tv_title = findViewById(R.id.tv_photo_details_title);
-        //用户分享的图片
+        //food image
         iv_picture = findViewById(R.id.iv_photo_details_background);
-        //用户分享的内容
+        //Description
         tv_content = findViewById(R.id.tv_photo_details_context);
-        //左上角的用户username
+        //Publisher user name
         tv_username = findViewById(R.id.tv_photo_details_username);
+        // Food availability
+        tv_available = findViewById(R.id.available);
+        // Food list days
+        tv_listDays = findViewById(R.id.listDay);
+        // food type(halal/non-halal)
+        tv_foodType = findViewById(R.id.foodType);
 
-//        tv_username.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent();
-//                intent.setClass(PhotoDetailsActivity.this, JumpAbout.class);
-//                intent.putExtra("username", username);
-//                intent.putExtra("userId", puserid);
-//                startActivity(intent);
-//            }
-//        });
-        //查看评论
+
+       /* //Comment
         tv_comment = findViewById(R.id.jump_test);
-        //喜欢的爱心图标
+        //Like Heart symbol
         iv_like = findViewById(R.id.iv_photo_details_like);
-        //收藏的五角星图标
-        iv_collect = findViewById(R.id.iv_photo_details_collect);
+        //store/collect star symbol
+        iv_collect = findViewById(R.id.iv_photo_details_collect);*/
     }
 
     private void initData() {
-//      评论的点击事件
+       /* //   Comment click event
         tv_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -129,7 +129,7 @@ public class FoodDetailActivity extends AppCompatActivity  {
             }
         });
 
-//       点赞的点击事件
+        // Like click event
         iv_like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -142,12 +142,12 @@ public class FoodDetailActivity extends AppCompatActivity  {
                     unlikePost();
                 }
 
-                //设置动画
+                //Animation setup
                 iv_like.startAnimation(AnimationUtils.loadAnimation(
                         PhotoDetailsActivity.this, R.anim.dianzan_anim));
             }
         });
-//        收藏点击事件
+        //  Store/collect click event
         iv_collect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -159,331 +159,103 @@ public class FoodDetailActivity extends AppCompatActivity  {
                     iv_collect.setImageResource(R.drawable.ic_baseline_collect_border_white);
                     unCollectPost();
                 }
-                //设置动画
+                //animation setup
                 iv_collect.startAnimation(AnimationUtils.loadAnimation(
-                        PhotoDetailsActivity.this, R.anim.dianzan_anim));
+                        FoodDetailActivity.this, R.anim.dianzan_anim));
             }
-        });
+        });*/
     }
 
-    /**
-     * 获取单个图文分享的详情
-     */
-    private void get() {
-        new Thread(() -> {
-            // url路径
-            String url = "http://47.107.52.7:88/member/photo/share/detail?";
-            String info = "shareId=" + shareId + "&userId=" + userId;
-            // 请求头
-            Headers headers = new Headers.Builder()
-                    .add("appId", Constant.APPID)
-                    .add("appSecret", Constant.APPSECRET)
-                    .add("Accept", "application/json, text/plain, */*")
-                    .build();
-            //请求组合创建
-            Request request = new Request.Builder()
-                    .url(url + info)
-                    // 将请求头加至请求中
-                    .headers(headers)
-                    .get()
-                    .build();
-            try {
-                OkHttpClient client = new OkHttpClient();
-                //发起请求，传入callback进行回调
-                client.newCall(request).enqueue(Getcallback);
-            } catch (NetworkOnMainThreadException ex) {
-                ex.printStackTrace();
-            }
-        }).start();
-    }
+        /**
+         * Get shared food detail
+         */
+        private void get() {
+            new Thread(() -> {
+                // url
+                String url = "https://8094de54-7fbc-4762-bfe8-9a8dfbd29834.mock.pstmn.io/getFooddetail\n?";
+                String info = "foodId=12";// + foodId;
 
-    /**
-     * 回调
-     */
-    private final Callback Getcallback = new Callback() {
-        @Override
-        public void onFailure(@NonNull Call call, IOException e) {
-            //TODO 请求失败处理
-            e.printStackTrace();
-        }
-        @Override
-        public void onResponse(@NonNull Call call, Response response) throws IOException {
-            //TODO 请求成功处理
-            if (response.isSuccessful()) {
-                String responseBody = response.body().string();
-                Log.d("PhotoDetailsActivity_数据", responseBody);
-                Gson gson = new Gson();
-                Gson_PhotoDetails responseData = gson.fromJson(responseBody, Gson_PhotoDetails.class);
-                photodetails = responseData.getData();
-                //获取图片的网址
-                imageUrl = photodetails.getImageUrlList()[0];
-                puserid = photodetails.getPUserId();
-                Message message = new Message();
-                message.obj = imageUrl;
-                setPictureHandler.sendMessage(message);
-            }
-        }
-    };
-
-    //    private final Handler photoHandler = new Handler(Looper.getMainLooper())
-    private final Handler setPictureHandler = new Handler(Looper.getMainLooper()) {
-        @Override
-        public void handleMessage(Message msg) {
-            title = photodetails.getTitle();//标题
-            content = photodetails.getContent();//内容
-            username = photodetails.getUsername();//用户名字
-            tv_title.setText(title);
-            tv_username.setText(username);
-            tv_content.setText(content);
-            likeId = photodetails.getLikeId();//当前图片分享的用户点赞的主键id
-            collectId = photodetails.getCollectId();//当前图片分享的用户收藏的主键id
-            //把图片填入ohotoview
-            Glide.with(PhotoDetailsActivity.this).load(msg.obj).into(iv_picture);
-
-            islike = photodetails.getHasLike();//是否已点赞
-            isCollect = photodetails.getHasCollect();//是否已收藏
-
-            if (islike == true) {
-                iv_like.setImageResource(R.drawable.ic_baseline_favorite_24);
-            }
-            if (islike == false) {
-                iv_like.setImageResource(R.drawable.ic_baseline_favorite_border_24);
-            }
-            if (isCollect == true) {
-                iv_collect.setImageResource(R.drawable.ic_baseline_star_24);
-            }
-            if (isCollect == false) {
-                iv_collect.setImageResource(R.drawable.ic_baseline_collect_border_white);
-            }
-
-        }
-    };
-
-    private void likePost() {
-        new Thread(() -> {
-
-            // url路径
-            String url = "http://47.107.52.7:88/member/photo/like?shareId=" + shareId + "&userId=" + userId;
-
-            // 请求头
-            Headers headers = new Headers.Builder()
-                    .add("appId", Constant.APPID)
-                    .add("appSecret", Constant.APPSECRET)
-                    .add("Accept", "application/json, text/plain, */*")
-                    .build();
-
-
-            MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
-
-            //请求组合创建
-            Request request = new Request.Builder()
-                    .url(url)
-                    .headers(headers)
-                    .post(RequestBody.create(MEDIA_TYPE_JSON, ""))
-                    .build();
-            try {
-                OkHttpClient client = new OkHttpClient();
-                //发起请求，传入callback进行回调
-                client.newCall(request).enqueue(likepostcallback);
-            } catch (NetworkOnMainThreadException ex) {
-                ex.printStackTrace();
-            }
-        }).start();
-    }
-
-    /**
-     * 回调
-     */
-    private final Callback likepostcallback = new Callback() {
-        @Override
-        public void onFailure(@NonNull Call call, IOException e) {
-            //TODO 请求失败处理
-            e.printStackTrace();
-        }
-
-        @Override
-        public void onResponse(@NonNull Call call, Response response) throws IOException {
-            //TODO 请求成功处理
-            if (response.isSuccessful()) {
-                String responseData = response.body().string();
-                Gson gson = new Gson();
-                Gson_Base base = gson.fromJson(responseData, Gson_Base.class);
-                if (base.getCode() == 200) {
-
+                //Request
+                Request request = new Request.Builder()
+                        .url(url + info)
+                        // add header
+                        .addHeader("appSecret", "123456")
+                        .addHeader("Content-Type", "application/json;charset=UTF-8")
+                        .get()
+                        .build();
+                try {
+                    OkHttpClient client = new OkHttpClient();
+                    //Send Request，& callback
+                    client.newCall(request).enqueue(Getcallback);
+                } catch (NetworkOnMainThreadException ex) {
+                    ex.printStackTrace();
                 }
-
-            }
-        }
-    };
-
-    private void unlikePost() {
-        new Thread(() -> {
-
-            // url路径
-            String url = "http://47.107.52.7:88/member/photo/like/cancel?likeId=" + likeId;
-
-            // 请求头
-            Headers headers = new Headers.Builder()
-                    .add("appId", Constant.APPID)
-                    .add("appSecret", Constant.APPSECRET)
-                    .add("Accept", "application/json, text/plain, */*")
-                    .build();
-
-
-            MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
-
-            //请求组合创建
-            Request request = new Request.Builder()
-                    .url(url)
-                    // 将请求头加至请求中
-                    .headers(headers)
-                    .post(RequestBody.create(MEDIA_TYPE_JSON, ""))
-                    .build();
-            try {
-                OkHttpClient client = new OkHttpClient();
-                //发起请求，传入callback进行回调
-                client.newCall(request).enqueue(unlikePostcallback);
-            } catch (NetworkOnMainThreadException ex) {
-                ex.printStackTrace();
-            }
-        }).start();
-    }
-
-    /**
-     * 回调
-     */
-    private final Callback unlikePostcallback = new Callback() {
-        @Override
-        public void onFailure(@NonNull Call call, IOException e) {
-            //TODO 请求失败处理
-            e.printStackTrace();
+            }).start();
         }
 
-        @Override
-        public void onResponse(@NonNull Call call, Response response) throws IOException {
-            //TODO 请求成功处理
-            if (response.isSuccessful()) {
-                String responseData = response.body().string();
-                Gson gson = new Gson();
-                Gson_Base base = gson.fromJson(responseData, Gson_Base.class);
-                if (base.getCode() == 200) {
+        /**
+         * callback
+         */
+        private final Callback Getcallback = new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, IOException e) {
 
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, Response response) throws IOException {
+                //Process request
+                if (response.isSuccessful()) {
+                    String responseBody = response.body().string();
+                    Log.d("FoodDetailsActivity_Data", responseBody);
+                    Gson gson = new Gson();
+                    responseData = gson.fromJson(responseBody, FoodBean.class);
+
+                    //Get image url
+                    imageUrl = responseData.getImgUrl();
+                    //puserid = responseData.getPublisher().getUserId().toString();
+                    Message message = new Message();
+                    message.obj = imageUrl;
+                    setPictureHandler.sendMessage(message);
                 }
             }
-        }
-    };
+        };
 
-    private void CollectPost() {
-        new Thread(() -> {
-
-            // url路径
-            String url = "http://47.107.52.7:88/member/photo/collect?shareId=" + shareId + "&userId=" + userId;
-
-            // 请求头
-            Headers headers = new Headers.Builder()
-                    .add("appId", APPID)
-                    .add("appSecret", APPSECRET)
-                    .add("Accept", "application/json, text/plain, */*")
-                    .build();
-
-
-            MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
-
-            //请求组合创建
-            Request request = new Request.Builder()
-                    .url(url)
-                    // 将请求头加至请求中
-                    .headers(headers)
-                    .post(RequestBody.create(MEDIA_TYPE_JSON, ""))
-                    .build();
-            try {
-                OkHttpClient client = new OkHttpClient();
-                //发起请求，传入callback进行回调
-                client.newCall(request).enqueue(Collectcallback);
-            } catch (NetworkOnMainThreadException ex) {
-                ex.printStackTrace();
-            }
-        }).start();
-    }
-
-    /**
-     * 回调
-     */
-    private final Callback Collectcallback = new Callback() {
-        @Override
-        public void onFailure(@NonNull Call call, IOException e) {
-            //TODO 请求失败处理
-            e.printStackTrace();
-        }
-
-        @Override
-        public void onResponse(@NonNull Call call, Response response) throws IOException {
-            //TODO 请求成功处理
-            if (response.isSuccessful()) {
-                Gson gson = new Gson();
-                String responseData = response.body().string();
-                Gson_Base body = gson.fromJson(responseData, Gson_Base.class);
-                if (body.getCode() == 200) {
-                    Log.d("收藏信息", "已收藏");
+        private final Handler setPictureHandler = new Handler(Looper.getMainLooper()) {
+            @Override
+            public void handleMessage(Message msg) {
+                title = responseData.getTitle();//Title
+                content = responseData.getDescription();//Description
+                username = responseData.getPublisher().getUserName();//publisher
+                if(responseData.isPendingPickup() && !responseData.isCollected() && responseData.isListed()){
+                    available="Blocked & Pending for pick-up";
+                    Log.d("111111==PendingPickup==Collected==Listed","true==false==true");
                 }
-            }
-        }
-    };
-
-    private void unCollectPost() {
-        new Thread(() -> {
-
-            // url路径
-            String url = "http://47.107.52.7:88/member/photo/collect/cancel?collectId=" + collectId;
-
-            // 请求头
-            Headers headers = new Headers.Builder()
-                    .add("appId", APPID)
-                    .add("appSecret", APPSECRET)
-                    .add("Accept", "application/json, text/plain, */*")
-                    .build();
-
-
-            MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
-
-            //请求组合创建
-            Request request = new Request.Builder()
-                    .url(url)
-                    // 将请求头加至请求中
-                    .headers(headers)
-                    .post(RequestBody.create(MEDIA_TYPE_JSON, ""))
-                    .build();
-            try {
-                OkHttpClient client = new OkHttpClient();
-                //发起请求，传入callback进行回调
-                client.newCall(request).enqueue(unCollectcallback);
-            } catch (NetworkOnMainThreadException ex) {
-                ex.printStackTrace();
-            }
-        }).start();
-    }
-
-    /**
-     * 回调
-     */
-    private final Callback unCollectcallback = new Callback() {
-        @Override
-        public void onFailure(@NonNull Call call, IOException e) {
-            //TODO 请求失败处理
-            e.printStackTrace();
-        }
-
-        @Override
-        public void onResponse(@NonNull Call call, Response response) throws IOException {
-            //TODO 请求成功处理
-            if (response.isSuccessful()) {
-                String responseData = response.body().string();
-                Gson gson = new Gson();
-                Gson_Base body = gson.fromJson(responseData, Gson_Base.class);
-                if (body.getCode() == 200) {
+                else if(!responseData.isPendingPickup() && responseData.isCollected() && responseData.isListed()){
+                    available="Food Already Collected";
+                    Log.d("111111==PendingPickup==Collected==Listed","false==true==true");
 
                 }
+                else if(!responseData.isPendingPickup() && !responseData.isCollected() && responseData.isListed()){
+                    available="Grab this";
+                    Log.d("111111==PendingPickup==Collected==Listed","false==false==true");
+                }else {
+                    available="Not Available";
+                    Log.d("111111==PendingPickup==Collected==Listed","??==??==false");
+                }
+                listDays= String.valueOf(responseData.getListDays());
+                foodType=responseData.getFoodType().name().toString();
+                tv_title.setText(title);
+                tv_username.setText(username);
+                tv_content.setText(content);
+                tv_available.setText(available);
+                tv_listDays.setText(listDays);
+                tv_foodType.setText(foodType);
+                //Fill image into view
+                Glide.with(FoodDetailActivity.this).load(msg.obj).into(iv_picture);
+
             }
-        }
-    };
+        };
+
 }
