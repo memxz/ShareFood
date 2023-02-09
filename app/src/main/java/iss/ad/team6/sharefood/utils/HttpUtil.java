@@ -85,16 +85,26 @@ public class HttpUtil {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                String json = response.body().string();
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (callback!=null){
-                            callback.onGetSuccess(json);
+                if(response.code() == 201) {
+                    String json = response.body().string();
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (callback != null) {
+                                callback.onGetSuccess(json);
+                            }
                         }
-                    }
-                });
-
+                    });
+                }
+                else if(response.code() == 204) {
+                    Log.d("111111","Field input got authentication or verification issue, pls change your input");
+                }
+                else if(response.code() == 200){
+                    Log.d("111111","Request successfully but user account is not created successfully");
+                }
+                else{
+                    Log.d("111111","connection to backend failed");
+                }
             }
         });
     }
@@ -171,4 +181,3 @@ public class HttpUtil {
         void onGetFailed(String msg);
     }
 }
-

@@ -1,0 +1,65 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:padding="@dimen/dp_15"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/iv_header"
+        android:layout_marginTop="@dimen/dp_40"
+        android:src="@mipmap/icon_user_pic"
+        android:layout_width="@dimen/dp_80"
+        android:layout_height="@dimen/dp_80"/>
+
+    <LinearLayout
+        android:id="@+id/menu_0"
+        android:layout_marginTop="@dimen/dp_30"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:padding="@dimen/dp_8"
+        android:background="#8BC34A"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="edit profile"
+            android:textSize="@dimen/dp_20"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/menu_1"
+        android:layout_marginTop="@dimen/dp_30"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:padding="@dimen/dp_8"
+        android:background="#8BC34A"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="history"
+            android:textSize="@dimen/dp_20"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/menu_2"
+        android:layout_marginTop="@dimen/dp_30"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:padding="@dimen/dp_8"
+        android:background="#8BC34A"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="log out"
+            android:textSize="@dimen/dp_20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</LinearLayout>
