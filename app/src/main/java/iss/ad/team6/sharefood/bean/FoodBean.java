@@ -24,7 +24,7 @@ public class FoodBean {
     @SerializedName("isCollected")
     private boolean isCollected;
 
-    @SerializedName("foodType")
+    @SerializedName("isHalal")
     private FoodType foodType;
 
     @SerializedName("isListed")
@@ -33,7 +33,7 @@ public class FoodBean {
 //    @SerializedName("foodLocation")
 //    private Location foodLocation;
 
-    @SerializedName("imgUrl")
+    @SerializedName("img")
     private String imgUrl;
 
     @SerializedName("publisher")

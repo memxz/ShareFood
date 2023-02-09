@@ -76,7 +76,7 @@ public class FoodDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_fooddetail);
         Intent intent = getIntent();
         //Get value From  List_Fragment
-        userId = "21";//intent.getStringExtra("userId");
+        userId = "9";//intent.getStringExtra("userId");
         foodId = intent.getStringExtra("foodId");
 //        shareId = intent.getStringExtra("shareId");
 //        userHeadimg = intent.getStringExtra("userHeadimg");
@@ -147,7 +147,7 @@ public class FoodDetailActivity extends AppCompatActivity {
         new Thread(() -> {
 
             // url
-            String url = "https://8094de54-7fbc-4762-bfe8-9a8dfbd29834.mock.pstmn.io/getFooddetail/raiserequest";
+            String url = "https://card-service-cloudrun-lmgpq3qg3a-et.a.run.app/card-service/api/food/update";//https://8094de54-7fbc-4762-bfe8-9a8dfbd29834.mock.pstmn.io/getFooddetail/raiserequest";
 
             MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
             //Set Pending to false to cancel request
@@ -159,7 +159,7 @@ public class FoodDetailActivity extends AppCompatActivity {
                     // add header
                     .addHeader("appSecret", "123456")
                     .addHeader("Content-Type", "application/json;charset=UTF-8")
-                    .post(RequestBody.create(MEDIA_TYPE_JSON, json))
+                    .put(RequestBody.create(MEDIA_TYPE_JSON, json))
                     .build();
             try {
                 OkHttpClient client = new OkHttpClient();
@@ -175,7 +175,7 @@ public class FoodDetailActivity extends AppCompatActivity {
         new Thread(() -> {
 
             // url
-            String url = "https://8094de54-7fbc-4762-bfe8-9a8dfbd29834.mock.pstmn.io/getFooddetail/cancelrequest";
+            String url = "https://card-service-cloudrun-lmgpq3qg3a-et.a.run.app/card-service/api/food/update";//https://8094de54-7fbc-4762-bfe8-9a8dfbd29834.mock.pstmn.io/getFooddetail/cancelrequest";
 
             MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
             //Set Pending to false to cancel request
@@ -187,7 +187,7 @@ public class FoodDetailActivity extends AppCompatActivity {
                     // add header
                     .addHeader("appSecret", "123456")
                     .addHeader("Content-Type", "application/json;charset=UTF-8")
-                    .post(RequestBody.create(MEDIA_TYPE_JSON, json))
+                    .put(RequestBody.create(MEDIA_TYPE_JSON, json))
                     .build();
             try {
                 OkHttpClient client = new OkHttpClient();
@@ -204,7 +204,7 @@ public class FoodDetailActivity extends AppCompatActivity {
         new Thread(() -> {
 
             // url
-            String url = "https://8094de54-7fbc-4762-bfe8-9a8dfbd29834.mock.pstmn.io/getFooddetail/completerequest";
+            String url = "https://card-service-cloudrun-lmgpq3qg3a-et.a.run.app/card-service/api/food/update";//https://8094de54-7fbc-4762-bfe8-9a8dfbd29834.mock.pstmn.io/getFooddetail/completerequest";
 
             MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
             //Set Pending to false to cancel request
@@ -217,7 +217,7 @@ public class FoodDetailActivity extends AppCompatActivity {
                     // add header
                     .addHeader("appSecret", "123456")
                     .addHeader("Content-Type", "application/json;charset=UTF-8")
-                    .post(RequestBody.create(MEDIA_TYPE_JSON, json))
+                    .put(RequestBody.create(MEDIA_TYPE_JSON, json))
                     .build();
             try {
                 OkHttpClient client = new OkHttpClient();
@@ -264,8 +264,8 @@ public class FoodDetailActivity extends AppCompatActivity {
         private void get() {
             new Thread(() -> {
                 // url
-                String url = "https://8094de54-7fbc-4762-bfe8-9a8dfbd29834.mock.pstmn.io/getFooddetail\n?";
-                String info = "foodId=12";// + foodId;
+                String url = "https://card-service-cloudrun-lmgpq3qg3a-et.a.run.app/card-service/api/food\n";//https://8094de54-7fbc-4762-bfe8-9a8dfbd29834.mock.pstmn.io/getFooddetail\n?";
+                String info = "/22";// + foodId;
 
                 //Request
                 Request request = new Request.Builder()
