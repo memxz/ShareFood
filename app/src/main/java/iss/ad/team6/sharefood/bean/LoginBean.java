@@ -12,7 +12,7 @@ public class LoginBean {
     private String userName;
 
     @SerializedName("password")
-    private String pwd;
+    private String password;
 
     @SerializedName("email")
     private String email;
@@ -47,8 +47,8 @@ public class LoginBean {
         return userName;
     }
 
-    public String getPwd() {
-        return pwd;
+    public String getPassword() {
+        return password;
     }
 
     public String getEmail() {
