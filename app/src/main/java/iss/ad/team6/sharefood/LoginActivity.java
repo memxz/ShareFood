@@ -36,7 +36,8 @@ import okhttp3.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private final String loginUrl="https://8094de54-7fbc-4762-bfe8-9a8dfbd29834.mock.pstmn.io/authenticate";//https://card-service-cloudrun-lmgpq3qg3a-et.a.run.app/card-service/api/dummy/authenticate";
+    private final String loginUrl="https://card-service-cloudrun-lmgpq3qg3a-et.a.run.app/card-service/api/individual/authenticate";//https://8094de54-7fbc-4762-bfe8-9a8dfbd29834.mock.pstmn.io/authenticate/login";//https://card-service-cloudrun-lmgpq3qg3a-et.a.run.app/card-service/api/dummy/authenticate";
+
     private EditText edit_name,edit_psd;
     private CheckBox checkBox;
     private Button btn;
@@ -148,7 +149,7 @@ public class LoginActivity extends AppCompatActivity {
 
         JSONObject jsJson=new JSONObject();
         try {
-            jsJson.put("account", account);
+            jsJson.put("email", account);
             jsJson.put("password", password);
         } catch (JSONException e){
             e.printStackTrace();

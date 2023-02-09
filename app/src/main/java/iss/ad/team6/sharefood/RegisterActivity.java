@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import iss.ad.team6.sharefood.base.BaseActivity;
+import iss.ad.team6.sharefood.bean.LoginBean;
 import iss.ad.team6.sharefood.bean.RegisterResultBean;
 import iss.ad.team6.sharefood.databinding.ActivityRegisterBinding;
 import iss.ad.team6.sharefood.utils.Api;
@@ -32,7 +33,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         String password = mBinding.etPassword.getText().toString().trim();
         String email=mBinding.etEmail.getText().toString().trim();
         String salary=mBinding.etSalary.getText().toString().trim();
-        String role = mBinding.rb1.isChecked()?"seller":"buyer";
+        String role = mBinding.rb1.isChecked()?"giver":"receiver";
 
         if (isEmptyStr(phone)) {
             showToast("invalid phone");
@@ -55,12 +56,14 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         params.put("email", email);
         params.put("salary", salary);
         params.put("role", role);
-        HttpUtil.post(url, params, new HttpUtil.OnGetDataCallback() {
+        HttpUtil.post_json(url, params, new HttpUtil.OnGetDataCallback() {
             @Override
             public void onGetSuccess(String json) {
                 Log.d(TAG, "onGetSuccess: json = "+json);
-                RegisterResultBean resp = new Gson().fromJson(json, RegisterResultBean.class);
-                if (resp.isSuccess()){
+                //RegisterResultBean resp = new Gson().fromJson(json, RegisterResultBean.class);
+                LoginBean resp = new Gson().fromJson(json, LoginBean.class);
+                //if (resp.isSuccess()){
+                if(resp.getUserId()!=null){
                     showToast("register successfully");
                     finish();
                 }else {
