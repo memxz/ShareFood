@@ -10,6 +10,7 @@ import android.os.NetworkOnMainThreadException;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -66,14 +67,16 @@ public class FoodDetailActivity extends AppCompatActivity {
     private String available;
     private String listDays;
     private String foodType;
-
+    private Button requestButton;
+    private Button completeButton;
+    private Button cancelReqButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fooddetail);
         Intent intent = getIntent();
         //Get value From  List_Fragment
-        userId = intent.getStringExtra("userId");
+        userId = "21";//intent.getStringExtra("userId");
         foodId = intent.getStringExtra("foodId");
 //        shareId = intent.getStringExtra("shareId");
 //        userHeadimg = intent.getStringExtra("userHeadimg");
@@ -105,6 +108,9 @@ public class FoodDetailActivity extends AppCompatActivity {
         // food type(halal/non-halal)
         tv_foodType = findViewById(R.id.foodType);
 
+        requestButton = (Button) findViewById(R.id.requestBtn);
+        cancelReqButton=findViewById(R.id.cancelReqBtn);
+        completeButton = (Button) findViewById(R.id.completeBtn);
 
        /* //Comment
         tv_comment = findViewById(R.id.jump_test);
@@ -115,56 +121,142 @@ public class FoodDetailActivity extends AppCompatActivity {
     }
 
     private void initData() {
-       /* //   Comment click event
-        tv_comment.setOnClickListener(new View.OnClickListener() {
+
+        requestButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setClass(PhotoDetailsActivity.this, CommentActivity.class);
-                intent.putExtra("shareId", shareId);
-                intent.putExtra("userHeadimg", userHeadimg);
-                intent.putExtra("userId", userId);
-                intent.putExtra("pl_username", pl_username);
-                startActivity(intent);
+            public void onClick(View v) {
+                raiserequestPost();
+            }
+        });
+        cancelReqButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cancelrequestPost();
             }
         });
 
-        // Like click event
-        iv_like.setOnClickListener(new View.OnClickListener() {
+        completeButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                islike = !islike;
-                if (islike) {
-                    iv_like.setImageResource(R.drawable.ic_baseline_favorite_24);
-                    likePost();
-                } else {
-                    iv_like.setImageResource(R.drawable.ic_baseline_favorite_border_24);
-                    unlikePost();
-                }
-
-                //Animation setup
-                iv_like.startAnimation(AnimationUtils.loadAnimation(
-                        PhotoDetailsActivity.this, R.anim.dianzan_anim));
+            public void onClick(View v) {
+                completerequestPost();
             }
         });
-        //  Store/collect click event
-        iv_collect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                isCollect = !isCollect;
-                if (isCollect) {
-                    iv_collect.setImageResource(R.drawable.ic_baseline_star_24);
-                    CollectPost();
-                } else {
-                    iv_collect.setImageResource(R.drawable.ic_baseline_collect_border_white);
-                    unCollectPost();
-                }
-                //animation setup
-                iv_collect.startAnimation(AnimationUtils.loadAnimation(
-                        FoodDetailActivity.this, R.anim.dianzan_anim));
-            }
-        });*/
     }
+    //Raise Request Post
+    private void raiserequestPost() {
+        new Thread(() -> {
+
+            // url
+            String url = "https://8094de54-7fbc-4762-bfe8-9a8dfbd29834.mock.pstmn.io/getFooddetail/raiserequest";
+
+            MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
+            //Set Pending to false to cancel request
+            responseData.setPendingPickup(true);
+            String json=new Gson().toJson(responseData);
+            //request
+            Request request = new Request.Builder()
+                    .url(url)
+                    // add header
+                    .addHeader("appSecret", "123456")
+                    .addHeader("Content-Type", "application/json;charset=UTF-8")
+                    .post(RequestBody.create(MEDIA_TYPE_JSON, json))
+                    .build();
+            try {
+                OkHttpClient client = new OkHttpClient();
+                //Raise post request，get callback
+                client.newCall(request).enqueue(Getcallback);
+            } catch (NetworkOnMainThreadException ex) {
+                ex.printStackTrace();
+            }
+        }).start();
+    }
+    //cancel Request Post
+    private void cancelrequestPost() {
+        new Thread(() -> {
+
+            // url
+            String url = "https://8094de54-7fbc-4762-bfe8-9a8dfbd29834.mock.pstmn.io/getFooddetail/cancelrequest";
+
+            MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
+            //Set Pending to false to cancel request
+            responseData.setPendingPickup(false);
+            String json=new Gson().toJson(responseData);
+            //request
+            Request request = new Request.Builder()
+                    .url(url)
+                    // add header
+                    .addHeader("appSecret", "123456")
+                    .addHeader("Content-Type", "application/json;charset=UTF-8")
+                    .post(RequestBody.create(MEDIA_TYPE_JSON, json))
+                    .build();
+            try {
+                OkHttpClient client = new OkHttpClient();
+                //Raise post request，get callback
+                client.newCall(request).enqueue(Getcallback);
+            } catch (NetworkOnMainThreadException ex) {
+                ex.printStackTrace();
+            }
+        }).start();
+    }
+
+    //complete Request Post
+    private void completerequestPost() {
+        new Thread(() -> {
+
+            // url
+            String url = "https://8094de54-7fbc-4762-bfe8-9a8dfbd29834.mock.pstmn.io/getFooddetail/completerequest";
+
+            MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
+            //Set Pending to false to cancel request
+            responseData.setPendingPickup(false);
+            responseData.setCollected(true);
+            String json=new Gson().toJson(responseData);
+            //request
+            Request request = new Request.Builder()
+                    .url(url)
+                    // add header
+                    .addHeader("appSecret", "123456")
+                    .addHeader("Content-Type", "application/json;charset=UTF-8")
+                    .post(RequestBody.create(MEDIA_TYPE_JSON, json))
+                    .build();
+            try {
+                OkHttpClient client = new OkHttpClient();
+                //Raise post request，get callback
+                client.newCall(request).enqueue(Getcallback);
+            } catch (NetworkOnMainThreadException ex) {
+                ex.printStackTrace();
+            }
+        }).start();
+    }
+
+    /**
+     * Callback
+     */
+    /*private final Callback requestPostcallback = new Callback() {
+        @Override
+        public void onFailure(@NonNull Call call, IOException e) {
+
+            e.printStackTrace();
+        }
+
+        @Override
+        public void onResponse(@NonNull Call call, Response response) throws IOException {
+            //TODO request success
+            if (response.isSuccessful()) {
+                String responseBody= response.body().string();
+                Log.d("FoodDetailsActivity_Data", responseBody);
+                Gson gson = new Gson();
+                responseData = gson.fromJson(responseBody, FoodBean.class);
+                requestButton.setVisibility(View.GONE);
+                cancelReqButton.setVisibility(View.VISIBLE);
+                completeButton.setVisibility(View.GONE);
+
+            }
+        }
+    };*/
+
+
+
 
         /**
          * Get shared food detail
@@ -225,37 +317,60 @@ public class FoodDetailActivity extends AppCompatActivity {
         private final Handler setPictureHandler = new Handler(Looper.getMainLooper()) {
             @Override
             public void handleMessage(Message msg) {
-                title = responseData.getTitle();//Title
-                content = responseData.getDescription();//Description
-                username = responseData.getPublisher().getUserName();//publisher
-                if(responseData.isPendingPickup() && !responseData.isCollected() && responseData.isListed()){
-                    available="Blocked & Pending for pick-up";
-                    Log.d("111111==PendingPickup==Collected==Listed","true==false==true");
-                }
-                else if(!responseData.isPendingPickup() && responseData.isCollected() && responseData.isListed()){
-                    available="Food Already Collected";
-                    Log.d("111111==PendingPickup==Collected==Listed","false==true==true");
-
-                }
-                else if(!responseData.isPendingPickup() && !responseData.isCollected() && responseData.isListed()){
-                    available="Grab this";
-                    Log.d("111111==PendingPickup==Collected==Listed","false==false==true");
-                }else {
-                    available="Not Available";
-                    Log.d("111111==PendingPickup==Collected==Listed","??==??==false");
-                }
-                listDays= String.valueOf(responseData.getListDays());
-                foodType=responseData.getFoodType().name().toString();
-                tv_title.setText(title);
-                tv_username.setText(username);
-                tv_content.setText(content);
-                tv_available.setText(available);
-                tv_listDays.setText(listDays);
-                tv_foodType.setText(foodType);
-                //Fill image into view
-                Glide.with(FoodDetailActivity.this).load(msg.obj).into(iv_picture);
-
+                updateDetailInfo(msg);
             }
         };
 
+        private void updateDetailInfo(Message msg){
+            title = responseData.getTitle();//Title
+            content = responseData.getDescription();//Description
+            username = responseData.getPublisher().getUserName();//publisher
+            puserid=responseData.getPublisher().getUserId().toString();//publisher
+            if(responseData.isPendingPickup() && !responseData.isCollected() && responseData.isListed()){
+                available="Blocked & Pending for pick-up";
+                if(puserid!=null && puserid!="0" && puserid.equals(userId)) {
+                    requestButton.setVisibility(View.GONE);
+                    cancelReqButton.setVisibility(View.VISIBLE);
+                    completeButton.setVisibility(View.VISIBLE);
+                }
+                else {
+                    requestButton.setVisibility(View.GONE);
+                    cancelReqButton.setVisibility(View.GONE);
+                    completeButton.setVisibility(View.GONE);
+                }
+                Log.d("111111==PendingPickup==Collected==Listed","true==false==true");
+            }
+            else if(!responseData.isPendingPickup() && responseData.isCollected() && responseData.isListed()){
+                available="Food Already Collected";
+                requestButton.setVisibility(View.GONE);
+                cancelReqButton.setVisibility(View.GONE);
+                completeButton.setVisibility(View.GONE);
+                Log.d("111111==PendingPickup==Collected==Listed","false==true==true");
+
+            }
+            else if(!responseData.isPendingPickup() && !responseData.isCollected() && responseData.isListed()){
+                available="Grab this";
+                requestButton.setVisibility(View.VISIBLE);
+                cancelReqButton.setVisibility(View.GONE);
+                completeButton.setVisibility(View.GONE);
+                Log.d("111111==PendingPickup==Collected==Listed","false==false==true");
+            }else {
+                available="Not Available";
+                requestButton.setVisibility(View.GONE);
+                cancelReqButton.setVisibility(View.GONE);
+                completeButton.setVisibility(View.GONE);
+                Log.d("111111==PendingPickup==Collected==Listed","??==??==false");
+            }
+            listDays= String.valueOf(responseData.getListDays());
+            foodType=responseData.getFoodType().name().toString();
+            tv_title.setText(title);
+            tv_username.setText(username);
+            tv_content.setText(content);
+            tv_available.setText(available);
+            tv_listDays.setText(listDays);
+            tv_foodType.setText(foodType);
+            //Fill image into view
+            Glide.with(FoodDetailActivity.this).load(msg.obj).into(iv_picture);
+
+        }
 }
