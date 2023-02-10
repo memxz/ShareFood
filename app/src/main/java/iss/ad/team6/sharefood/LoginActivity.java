@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import iss.ad.team6.sharefood.bean.LoginBean;
+import iss.ad.team6.sharefood.utils.Api;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -36,7 +37,7 @@ import okhttp3.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private final String loginUrl="https://card-service-cloudrun-lmgpq3qg3a-et.a.run.app/card-service/api/individual/authenticate";//https://8094de54-7fbc-4762-bfe8-9a8dfbd29834.mock.pstmn.io/authenticate/login";//https://card-service-cloudrun-lmgpq3qg3a-et.a.run.app/card-service/api/dummy/authenticate";
+    private final String loginUrl= Api.api_login;//https://8094de54-7fbc-4762-bfe8-9a8dfbd29834.mock.pstmn.io/authenticate/login";//https://card-service-cloudrun-lmgpq3qg3a-et.a.run.app/card-service/api/dummy/authenticate";
     private EditText edit_name,edit_psd;
     private CheckBox checkBox;
     private Button btn;
@@ -171,7 +172,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onFailure(Call call, IOException e) {
                 Log.d("111111 post Request failure=====","Message: "+e.getMessage());
                 Log.d("111111 post Request failure=====","Request: "+call.request());
-
             }
 
             @Override
@@ -210,12 +210,10 @@ public class LoginActivity extends AppCompatActivity {
                             } else{
                                 Toast.makeText(LoginActivity.this,
                                         "User account or Password Wrong！",
-                                        Toast.LENGTH_SHORT).show();}
+                                        Toast.LENGTH_SHORT).show();
+                            }
                         }
-
                     });
-
-
             }
         });
     }

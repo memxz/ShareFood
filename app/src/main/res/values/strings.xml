@@ -15,6 +15,7 @@
     <string name="salaryInput">enter your annual salary number</string>
     <string name="role">role</string>
     <string name="signIn">sign in your food share account</string>
+    <string name="editAccount">Edit Account</string>
 
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
