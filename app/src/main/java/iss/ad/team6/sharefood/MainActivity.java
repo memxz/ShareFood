@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import iss.ad.team6.sharefood.fragment.EmptyFragment;
 import iss.ad.team6.sharefood.fragment.ManageAccountFragment;
+import iss.ad.team6.sharefood.fragment.ShowPageFragment;
 import iss.ad.team6.sharefood.utils.Utils;
 import iss.ad.team6.sharefood.utils.tabhost.FragmentTabHost;
 import iss.ad.team6.sharefood.utils.tabhost.OnTabActionListener;
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements OnTabActionListen
         int i = 0;
         TabHost.TabSpec tabSpec_0 = fragment_tab_host.newTabSpec(i + "");
         tabSpec_0.setIndicator(getMenuView(i));
-        fragment_tab_host.addTab(tabSpec_0, EmptyFragment.class, null);
+        fragment_tab_host.addTab(tabSpec_0, ShowPageFragment.class, null);
 
         i++;
         TabHost.TabSpec tabSpec_1 = fragment_tab_host.newTabSpec(i + "");
@@ -104,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements OnTabActionListen
         }
     }
         public  void logout(View view){
-            SharedPreferences sharedpreferences = getSharedPreferences("mypsd", Context.MODE_PRIVATE);
+            SharedPreferences sharedpreferences = getSharedPreferences("loginsp", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.clear();
             editor.apply();

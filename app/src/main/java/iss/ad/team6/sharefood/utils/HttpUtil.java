@@ -2,6 +2,7 @@ package iss.ad.team6.sharefood.utils;
 import android.nfc.Tag;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.Map;
 
+import iss.ad.team6.sharefood.bean.LoginBean;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -108,7 +110,10 @@ public class HttpUtil {
             }
         });
     }
-    public static void post_json(String url,Map<String,String> params,OnGetDataCallback callback){
+
+    @Deprecated
+    //not effect
+    public static void post_json_bak(String url,Map<String,String> params,OnGetDataCallback callback){
         MediaType JSON = MediaType.parse("application/json;charset=utf-8");
         //JSONObject json = new JSONObject();
         String json = "";
@@ -170,6 +175,43 @@ public class HttpUtil {
                 }
                 else{
                     Log.d("111111","connection to backend failed");
+                }
+            }
+        });
+    }
+    public static void post_json(String url,Map<String,String> params,OnGetDataCallback callback){
+        MediaType JSON=MediaType.parse("application/json;charset=utf-8");
+        JSONObject jsJson=new JSONObject();
+        try {
+            if (params!=null){
+                for (String key:params.keySet()){
+                    jsJson.put(key,params.get(key));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        OkHttpClient client=new OkHttpClient();
+        RequestBody requestBody=RequestBody.create(JSON,String.valueOf(jsJson));
+        Request request=new Request.Builder()
+                .url(url)
+                .addHeader("appSecret","123456")
+                .addHeader("Content-Type", "application/json;charset=UTF-8")
+                .post(requestBody)
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                if (callback!=null){
+                    callback.onGetFailed(e.getMessage());
+                }
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String responseData=response.body().string();
+                if (callback!=null){
+                    callback.onGetSuccess(responseData);
                 }
             }
         });
