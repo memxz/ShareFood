@@ -13,12 +13,13 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
     <style name="Theme.ShareFood.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-    <style name="Theme.FoodShare.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="Theme.FoodShare.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Theme.ShareFood.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
+    <style name="Theme.ShareFood.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
