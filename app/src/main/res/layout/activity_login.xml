@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/backgroundq"
+    android:orientation="vertical"
+    android:paddingHorizontal="12dp"
+    tools:context=".LoginActivity">
+
+    <ImageView
+        android:layout_width="350dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="80dp"
+        android:layout_gravity="center"
+        android:src="@drawable/tubiao" />
+    <FrameLayout
+        android:layout_width="350dp"
+        android:layout_height="70dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp" >
+
+        <EditText
+            android:theme="@style/MyEditText"
+            android:textCursorDrawable="@drawable/shape_et_cursor_color"
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/et_smallqq"
+            android:hint="@string/your_email"
+            android:maxLines="1"
+            android:textSize="20sp"
+            android:gravity="center"/>
+
+        <ImageView
+            android:id="@+id/iv_et_num_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/et_delete" />
+    </FrameLayout>
+    <FrameLayout
+        android:layout_width="350dp"
+        android:layout_height="70dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp" >
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/et_smallqq"
+            android:gravity="center"
+            android:hint="Your password"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:textCursorDrawable="@drawable/shape_et_cursor_color"
+            android:textSize="20sp"
+            android:theme="@style/MyEditText"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <ImageView
+            android:id="@+id/iv_et_pwd_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/et_delete" />
+
+        <ImageView
+            android:id="@+id/iv_pwd_switch"
+            android:layout_width="27dp"
+            android:layout_height="20dp"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/et_pwd_no" />
+    </FrameLayout>
+    <RelativeLayout
+        android:layout_width="350dp"
+        android:layout_height="40dp">
+        <CheckBox
+            android:id="@+id/login_recall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:text="Remember it"
+            android:textColor="@color/black"/>
+        <TextView
+            android:id="@+id/registered_account"
+            android:layout_marginLeft="240dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Signup"
+            android:textColor="@color/black"/>
+    </RelativeLayout>
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="24dp"
+            android:background="#ffffff"
+            android:text="Login"
+            android:textColor="#000000"/>
+
+
+</LinearLayout>

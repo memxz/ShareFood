@@ -1,0 +1,111 @@
+<resources>
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+
+    
+<!--    <style name="AnimationLeftFade">-->
+<!--        <item name="android:windowEnterAnimation">@anim/in_lefttoright</item>-->
+<!--        <item name="android:windowExitAnimation">@anim/out_righttoleft</item>-->
+<!--    </style>-->
+<!--    -->
+<!--    <style name="AnimationRightFade">-->
+<!--        <item name="android:windowEnterAnimation">@anim/in_righttoleft</item>-->
+<!--        <item name="android:windowExitAnimation">@anim/out_lefttoright</item>-->
+<!--    </style>-->
+
+
+    <style name="CheckBoxTheme">
+        <item name="colorAccent">@color/purple_500</item><!--选中颜色-->
+        <item name="colorControlNormal">@color/colorBlack</item><!--未选中颜色-->
+    </style>
+
+    <style name="MyEditText" parent="Theme.AppCompat.Light">
+
+        <item name="colorControlNormal">@color/purple_200</item>
+
+        <item name="colorControlActivated">@color/purple_200</item>
+
+    </style>
+    <style name="text_input_desc_style">
+        <item name="android:textColor">@color/second_color</item>
+        <item name="android:textSize">@dimen/sp_14</item>
+    </style>
+    <style name="btn_white_style">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/sp_16</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/btn_selector</item>
+    </style>
+
+    <style name="text_link_style">
+        <item name="android:textColor">@color/main_color</item>
+        <item name="android:textSize">@dimen/sp_14</item>
+    </style>
+    <style name="text_desc_white_style">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/sp_12</item>
+    </style>
+    <style name="text_desc_style">
+        <item name="android:textColor">@color/three_color</item>
+        <item name="android:textSize">@dimen/sp_12</item>
+    </style>
+    <style name="text_desc_small_white_style">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/sp_10</item>
+    </style>
+    <style name="text_desc_small_gray_style">
+        <item name="android:textColor">@color/three_color</item>
+        <item name="android:textSize">@dimen/sp_10</item>
+    </style>
+
+    <style name="text_desc_small_black_style">
+        <item name="android:textColor">@color/text_main_color</item>
+        <item name="android:textSize">@dimen/sp_10</item>
+    </style>
+    <style name="text_title_white_style">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/sp_18</item>
+    </style>
+    <style name="text_black_blod_style">
+        <item name="android:textColor">@color/text_main_color</item>
+        <item name="android:textSize">@dimen/sp_16</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="text_second_style">
+        <item name="android:textColor">@color/second_color</item>
+        <item name="android:textSize">@dimen/sp_16</item>
+    </style>
+    <style name="text_title_white_blod_style">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/sp_18</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="text_title_black_blod_style">
+        <item name="android:textColor">@color/text_main_color</item>
+        <item name="android:textSize">@dimen/sp_18</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="input_text_style">
+        <item name="android:textColor">@color/text_main_color</item>
+        <item name="android:textSize">@dimen/sp_14</item>
+        <item name="android:background">@drawable/input_bg_selector</item>
+        <item name="android:paddingLeft">@dimen/dp_24</item>
+        <item name="android:paddingRight">@dimen/dp_24</item>
+    </style>
+</resources>
