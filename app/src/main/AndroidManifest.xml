@@ -24,10 +24,6 @@
             android:exported="true"/>
 
         <activity
-            android:name=".ShowPageActivity"
-            android:exported="true"/>
-
-        <activity
             android:name=".MainActivity"
             android:exported="false"
             android:launchMode="singleTask"

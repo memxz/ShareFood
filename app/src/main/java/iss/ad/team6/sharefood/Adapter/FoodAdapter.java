@@ -14,16 +14,17 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import iss.ad.team6.sharefood.Model.Food;
 import iss.ad.team6.sharefood.R;
+import iss.ad.team6.sharefood.bean.FoodBean;
+import iss.ad.team6.sharefood.fragment.ShowPageFragment;
 
-public class FoodAdapter extends ArrayAdapter<Food> {
-    protected List<Food> foodList;
-    private final Context context;
+public class FoodAdapter extends ArrayAdapter<FoodBean> {
+    protected List<FoodBean> foodList;
+    private final ShowPageFragment context;
 
 
-    public FoodAdapter(Context context, List<Food> foodList) {
-        super(context,0,foodList);
+    public FoodAdapter(ShowPageFragment context, List<FoodBean> foodList) {
+        super(context.getActivity(), 0,foodList);
         this.context = context;
         this.foodList=foodList;
     }
@@ -36,8 +37,8 @@ public class FoodAdapter extends ArrayAdapter<Food> {
         ImageView imageView= view.findViewById(R.id.imageview);
         //int id=context.getResources().getIdentifier(foodList.get(position).getImg(),"drawable", context.getPackageName());//暂时用该方法，图片处理还需要考虑
         //imageView.setImageResource(id);
-        String imageUrl = foodList.get(position).getImg();
-        Picasso.with(context).load(imageUrl).resize(100, 100).into(imageView);
+        String imageUrl = foodList.get(position).getImgUrl();
+        Picasso.with(context.getContext()).load(imageUrl).resize(100, 100).into(imageView);
 
         TextView title=view.findViewById(R.id.foodName);
         title.setText(foodList.get(position).getTitle());
