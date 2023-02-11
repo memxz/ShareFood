@@ -1,11 +1,14 @@
-package iss.ad.team6.sharefood;
+package iss.ad.team6.sharefood.fragment;
 
-import androidx.appcompat.app.AppCompatActivity;
+import static android.content.Context.MODE_PRIVATE;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,51 +16,56 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import androidx.fragment.app.Fragment;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import iss.ad.team6.sharefood.Adapter.FoodAdapter;
+import iss.ad.team6.sharefood.FoodDetailActivity;
+import iss.ad.team6.sharefood.R;
+import iss.ad.team6.sharefood.bean.FoodBean;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import iss.ad.team6.sharefood.Model.Food;
-
-public class ShowPageActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class ShowPageFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     public final String foodlistUrl ="https://card-service-cloudrun-lmgpq3qg3a-et.a.run.app/card-service/api/food/get-list";//https://v99xcpwju4.execute-api.ap-northeast-1.amazonaws.com/FoodDelieveryTest/getfoodlist/";
     public final String searchUrl="https://v99xcpwju4.execute-api.ap-northeast-1.amazonaws.com/FoodDelieveryTest/getsearchlist/";
     ListView foodListView;
-    List<Food> foodList;
-    List<Food>selectedList;
+    List<FoodBean> foodList;
+    List<FoodBean>selectedList;
     RadioGroup radioGroup;
     RadioButton rb;
     final int cSelectedListMaxSize = 20;
+    public ShowPageFragment() {
+        // Required empty public constructor
+    }
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_page);
-        foodListView=findViewById(R.id.foodList);
-        Button searchBtn=findViewById(R.id.searchBtn);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_show_page, container, false);
+        foodListView=view.findViewById(R.id.foodList);
+        Button searchBtn=view.findViewById(R.id.searchBtn);
         if(searchBtn!=null)
         {
             searchBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     OkHttpHandler selectHandler=new OkHttpHandler();
-                    EditText input=findViewById(R.id.search);
+                    EditText input=view.findViewById(R.id.search);
                     String content=input.getText().toString();
                     String halaStatus=" ";
-                    radioGroup=findViewById(R.id.radioGroup);
+                    radioGroup=view.findViewById(R.id.radioGroup);
                     for(int i=0;i<radioGroup.getChildCount();i++)
                     {
                         RadioButton rb=(RadioButton) radioGroup.getChildAt(i);
@@ -77,7 +85,7 @@ public class ShowPageActivity extends AppCompatActivity implements AdapterView.O
             });
         }
 
-        Button refreshButton=findViewById(R.id.refreshButton);
+        Button refreshButton=view.findViewById(R.id.refreshButton);
         if(refreshButton != null)
         {
             refreshButton.setOnClickListener(new View.OnClickListener() {
@@ -91,7 +99,9 @@ public class ShowPageActivity extends AppCompatActivity implements AdapterView.O
         OkHttpHandler defaultHandler=new OkHttpHandler();
 
         // For test
-        final String userID = "9";
+        //final String userID = "9";
+        SharedPreferences pref = this.getActivity().getSharedPreferences("loginsp", MODE_PRIVATE);
+        final String userID=pref.getString("userId","");
 
         Map<String,String> inputMap=new HashMap<String,String>();
         inputMap.put("userID",userID);
@@ -99,7 +109,7 @@ public class ShowPageActivity extends AppCompatActivity implements AdapterView.O
         final String json = gson.toJson(inputMap);
         String method = "GET";
         defaultHandler.execute(foodlistUrl, method, json);
-
+        return view;
     }
     public class OkHttpHandler extends AsyncTask {
 
@@ -140,7 +150,7 @@ public class ShowPageActivity extends AppCompatActivity implements AdapterView.O
             String result= (String) o;
             Gson gson=new Gson();
 
-            foodList=gson.fromJson(result,new TypeToken<List<Food>>()
+            foodList=gson.fromJson(result,new TypeToken<List<FoodBean>>()
             {}.getType());
 
             refreshFoodList();
@@ -152,9 +162,12 @@ public class ShowPageActivity extends AppCompatActivity implements AdapterView.O
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        Food foodInfo = selectedList.get(i);
-        Intent intent = new Intent(this, FoodDetailActivity.class);
-        intent.putExtra(SELECTED_FOOD, foodInfo);
+        FoodBean foodInfo = selectedList.get(i);
+        Intent intent = new Intent(getActivity(), FoodDetailActivity.class);
+        //intent.putExtra(SELECTED_FOOD, foodInfo);
+        //Add Extra info
+        intent.putExtra("puserId", foodInfo.getPublisher().getUserId().toString());
+        intent.putExtra("foodId", foodInfo.getFoodId().toString());
         startActivity(intent);
     }
 
@@ -164,9 +177,9 @@ public class ShowPageActivity extends AppCompatActivity implements AdapterView.O
 
         selectedList = foodList.subList(0, Math.min(cSelectedListMaxSize, foodList.size()));
 
-        FoodAdapter adapter=new FoodAdapter(ShowPageActivity.this,selectedList);
+        FoodAdapter adapter=new FoodAdapter(ShowPageFragment.this,selectedList);
         foodListView.setAdapter(adapter);
-        foodListView.setOnItemClickListener(ShowPageActivity.this);
+        foodListView.setOnItemClickListener(ShowPageFragment.this);
     }
 
 

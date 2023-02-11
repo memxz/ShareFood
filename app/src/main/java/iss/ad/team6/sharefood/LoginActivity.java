@@ -205,7 +205,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                 input();
 
-                                Intent intent=new Intent(LoginActivity.this, Menu_Activity.class); //MainActivity.class); //now temp jump to main/menu activity
+                                Intent intent=new Intent(LoginActivity.this, MainActivity.class); //MainActivity.class); //now temp jump to main/menu activity
                                 //newly add for detailActivity
                                 intent.putExtra("userInfo",responseData);
 
