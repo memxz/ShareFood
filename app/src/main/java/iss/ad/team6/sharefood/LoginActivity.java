@@ -38,6 +38,7 @@ import okhttp3.Response;
 public class LoginActivity extends AppCompatActivity {
 
     private final String loginUrl= Api.api_login;//https://8094de54-7fbc-4762-bfe8-9a8dfbd29834.mock.pstmn.io/authenticate/login";//https://card-service-cloudrun-lmgpq3qg3a-et.a.run.app/card-service/api/dummy/authenticate";
+
     private EditText edit_name,edit_psd;
     private CheckBox checkBox;
     private Button btn;
@@ -74,14 +75,14 @@ public class LoginActivity extends AppCompatActivity {
         registerAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //跳转活动
+                //Jump to register
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
             }
         });
 
         /**
-         * 清空账号栏的EditText监听事件
+         * Clear account/email editText event listener
          */
         img_del.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         /**
-         * 清空密码栏的EditText监听事件
+         * Clear password row event listener
          */
         img_del2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,7 +103,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
         /**
-         * 密码是否可见的监听事件
+         * Listen to Hide/unhidden password event
          */
         ivPwdSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,9 +117,9 @@ public class LoginActivity extends AppCompatActivity {
                 else
                 {
                     ivPwdSwitch.setImageResource(R.drawable.ic_baseline_visibility_off_24);
-                    //输入一个密码或者 输入类型为普通文本
+                    //input password or common text
                     edit_psd.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD|InputType.TYPE_CLASS_TEXT);
-                    //设置字体样式
+                    //set up font format
                     edit_psd.setTypeface(Typeface.DEFAULT);
                 }
             }
@@ -195,14 +196,18 @@ public class LoginActivity extends AppCompatActivity {
                                 pref=getSharedPreferences("loginsp",MODE_PRIVATE);
                                 SharedPreferences.Editor editor=pref.edit();
                                 editor.putString("token","123456");//bean.getData().getAccess_token());//Hardcode token since simple the entity
+                                //newly add for detailActivity
+                                editor.putString("userId",bean.getUserId().toString());
+                                editor.putString("userName",bean.getUserName());
                                 editor.commit();
 
                                 Log.d("111111 main activity >>>","getAccess_token: "+pref.getString("token",""));
 
                                 input();
 
-                                Intent intent=new Intent(LoginActivity.this, MainActivity.class);
-
+                                Intent intent=new Intent(LoginActivity.this, Menu_Activity.class); //MainActivity.class); //now temp jump to main/menu activity
+                                //newly add for detailActivity
+                                intent.putExtra("userInfo",responseData);
 
                                 startActivity(intent);
 
