@@ -20,12 +20,26 @@
             android:exported="false"
             android:label="@string/title_dashboard" />
         <activity
+            android:name=".MainActivity"
+            android:exported="false"
+            tools:ignore="ExtraText">
+            android:theme="@style/Theme.ShareFood.NoActionBar"
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="true"/>
+        <activity
             android:name=".FoodDetailActivity"
             android:exported="true"/>
+        <activity
 
         <activity
             android:name=".ShowPageActivity"
             android:exported="true"/>
+        <activity
 
         <activity
             android:name=".MainActivity"

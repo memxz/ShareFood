@@ -76,7 +76,7 @@ public class FoodDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_fooddetail);
         Intent intent = getIntent();
         //Get value From  List_Fragment
-        userId = "9";//intent.getStringExtra("userId");
+        userId = "1";//intent.getStringExtra("userId");
         foodId = intent.getStringExtra("foodId");
 //        shareId = intent.getStringExtra("shareId");
 //        userHeadimg = intent.getStringExtra("userHeadimg");
@@ -265,7 +265,7 @@ public class FoodDetailActivity extends AppCompatActivity {
             new Thread(() -> {
                 // url
                 String url = "https://card-service-cloudrun-lmgpq3qg3a-et.a.run.app/card-service/api/food\n";//https://8094de54-7fbc-4762-bfe8-9a8dfbd29834.mock.pstmn.io/getFooddetail\n?";
-                String info = "/22";// + foodId;
+                String info = "/1";// + foodId;
 
                 //Request
                 Request request = new Request.Builder()
