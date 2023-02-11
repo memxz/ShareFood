@@ -60,7 +60,7 @@
                 android:imeOptions="actionNext"
                 android:inputType="text"
                 android:lines="1"
-                android:maxLength="11"
+                android:maxLength="45"
                 android:maxLines="1"
                 android:singleLine="true" />
           </LinearLayout>
@@ -112,7 +112,7 @@
                 android:imeOptions="actionNext"
                 android:inputType="text"
                 android:lines="1"
-                android:maxLength="11"
+                android:maxLength="45"
                 android:maxLines="1"
                 android:singleLine="true" />
           </LinearLayout>

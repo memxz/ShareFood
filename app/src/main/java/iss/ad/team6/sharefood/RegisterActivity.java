@@ -48,7 +48,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             return;
         }
 
-        String url = Api.baseUrl + Api.api_register;
         Map<String, String> params = new HashMap<>();
         params.put("userName", userName);
         params.put("password", password);
@@ -56,24 +55,34 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         params.put("email", email);
         params.put("salary", salary);
         params.put("role", role);
-        HttpUtil.post_json(url, params, new HttpUtil.OnGetDataCallback() {
+        HttpUtil.post_json(Api.api_register, params, new HttpUtil.OnGetDataCallback() {
             @Override
             public void onGetSuccess(String json) {
                 Log.d(TAG, "onGetSuccess: json = "+json);
                 //RegisterResultBean resp = new Gson().fromJson(json, RegisterResultBean.class);
-                LoginBean resp = new Gson().fromJson(json, LoginBean.class);
-                //if (resp.isSuccess()){
-                if(resp.getUserId()!=null){
-                    showToast("register successfully");
-                    finish();
-                }else {
-                    showToast("failed registering");
-                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        LoginBean resp = new Gson().fromJson(json, LoginBean.class);
+                        //if (resp.isSuccess()){
+                        if(resp.getUserId()!=null){
+                            showToast("register successfully");
+                            finish();
+                        }else {
+                            showToast("failed registering");
+                        }
+                    }
+                });
             }
             @Override
             public void onGetFailed(String msg) {
                 Log.d(TAG, "onGetFailed: "+msg);
-                showToast("failed");
+               runOnUiThread(new Runnable() {
+                   @Override
+                   public void run() {
+                       showToast("failed");
+                   }
+               });
             }
         });
     }
@@ -90,5 +99,4 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         }
     }
 }
-
 

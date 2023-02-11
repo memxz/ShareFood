@@ -15,4 +15,3 @@ public class RegisterResultBean extends BaseBean{
         return "1".equals(collected);
     }
 }
-
