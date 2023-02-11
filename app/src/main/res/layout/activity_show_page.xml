@@ -48,24 +48,24 @@
         android:orientation="horizontal">
 
         <RadioButton
-            android:id="@+id/btnHala"
+            android:id="@+id/btnHalal"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="hala"
+            android:text="halal"
             android:checked="true"
             tools:layout_editor_absoluteX="320dp"
             tools:layout_editor_absoluteY="58dp" />
 
         <RadioButton
-            android:id="@+id/btnNonHala"
+            android:id="@+id/btnNonHalal"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="false"
-            android:text="non-hala"
+            android:text="non-halal"
             tools:layout_editor_absoluteX="163dp"
             tools:layout_editor_absoluteY="58dp" />
 

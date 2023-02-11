@@ -36,7 +36,7 @@ public class FoodDetailActivity extends AppCompatActivity {
         TextView foodNameTextView = findViewById(R.id.FoodDetailsName);
         if(foodNameTextView != null)
         {
-            foodNameTextView.setText(foodInfo.getName());
+            foodNameTextView.setText(foodInfo.getTitle());
         }
 
         TextView foodDetailTextView = findViewById(R.id.FoodDetailsDescription);

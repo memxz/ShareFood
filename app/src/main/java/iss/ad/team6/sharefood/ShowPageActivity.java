@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -25,7 +24,6 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -35,7 +33,7 @@ import iss.ad.team6.sharefood.Model.Food;
 
 public class ShowPageActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
-    public final String postUrl="https://v99xcpwju4.execute-api.ap-northeast-1.amazonaws.com/FoodDelieveryTest/getfoodlist/";
+    public final String foodlistUrl ="https://card-service-cloudrun-lmgpq3qg3a-et.a.run.app/card-service/api/food/get-list";//https://v99xcpwju4.execute-api.ap-northeast-1.amazonaws.com/FoodDelieveryTest/getfoodlist/";
     public final String searchUrl="https://v99xcpwju4.execute-api.ap-northeast-1.amazonaws.com/FoodDelieveryTest/getsearchlist/";
     ListView foodListView;
     List<Food> foodList;
@@ -73,7 +71,8 @@ public class ShowPageActivity extends AppCompatActivity implements AdapterView.O
                     inputMap.put("Status",halaStatus);
                     inputMap.put("search",content);
                     String JsonStr=post.toJson(inputMap);
-                    selectHandler.execute(searchUrl,JsonStr);
+                    String method = "POST";
+                    selectHandler.execute(searchUrl, method, JsonStr);
                 }
             });
         }
@@ -92,13 +91,14 @@ public class ShowPageActivity extends AppCompatActivity implements AdapterView.O
         OkHttpHandler defaultHandler=new OkHttpHandler();
 
         // For test
-        final String sessionID = "0008677";
+        final String userID = "9";
 
         Map<String,String> inputMap=new HashMap<String,String>();
-        inputMap.put("SessionID",sessionID);
+        inputMap.put("userID",userID);
         Gson gson = new Gson();
         final String json = gson.toJson(inputMap);
-        defaultHandler.execute(postUrl, json);
+        String method = "GET";
+        defaultHandler.execute(foodlistUrl, method, json);
 
     }
     public class OkHttpHandler extends AsyncTask {
@@ -110,11 +110,19 @@ public class ShowPageActivity extends AppCompatActivity implements AdapterView.O
         protected Object doInBackground(Object[] params) {
 
 
-
             Request.Builder builder = new Request.Builder();
             builder.url((String) params[0]);
-            String json = (String)params[1];
-            builder.post(RequestBody.create(MediaType.get("application/json; charset=utf-8"), json));
+            String method = (String) params[1];
+            if(method == "GET")
+            {
+                // Do nothing
+            }
+            else if(method == "POST")
+            {
+                String json = (String)params[2];
+                builder.post(RequestBody.create(MediaType.get("application/json; charset=utf-8"), json));
+            }
+
             Request request = builder.build();
 
             try {

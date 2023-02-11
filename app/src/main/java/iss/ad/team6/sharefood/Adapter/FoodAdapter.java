@@ -40,7 +40,7 @@ public class FoodAdapter extends ArrayAdapter<Food> {
         Picasso.with(context).load(imageUrl).resize(100, 100).into(imageView);
 
         TextView title=view.findViewById(R.id.foodName);
-        title.setText(foodList.get(position).getName());
+        title.setText(foodList.get(position).getTitle());
 
         TextView description=view.findViewById(R.id.foodDescription);
         description.setText(foodList.get(position).getDescription());

@@ -4,57 +4,88 @@ import java.io.Serializable;
 
 public class Food implements Serializable {
 
-    String id;
-    String name;
+
+    long foodId;
+    String title;
     String description;
-    String genres;
+    String isHalal;
     String img;
+    int listDays;
+    float longitude;
+    float latitude;
+    String foodLocation;
+    Object publisher;
 
-    public Food (String id, String name, String description, String genres,String img) {
-        this.id = id;
-        this.name = name;
+    public Food (long foodId, String title, String description, String isHalal, String img, int listDays, float longitude, float latitude, String foodLocation, Object publisher) {
+        this.foodId = foodId;
+        this.title = title;
         this.description = description;
-        this.genres = genres;
+        this.isHalal = isHalal;
         this.img=img;
+        this.listDays = listDays;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.foodLocation = foodLocation;
     }
 
-    public String getId() {
-        return id;
+    public long getFoodId() {
+        return foodId;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public String getGenres() {
-        return genres;
+    public String getIsHalal() {
+        return isHalal;
     }
 
     public String getImg() {
         return img;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public int getListDays() { return listDays; }
+
+    public String getFoodLocation() { return foodLocation; }
+
+    public float getLongitude() { return longitude; }
+
+    public float getLatitude() { return latitude; }
+
+    public Object getPublisher() { return publisher; }
+
+
+    public void setFoodId(long foodId) {
+        this.foodId = foodId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public void setGenres(String genres) {
-        this.genres = genres;
+    public void setIsHalal(String isHalal) {
+        this.isHalal = isHalal;
     }
 
     public void setImg(String img) {
         this.img = img;
     }
+
+    public void setListDays(int listDays) { this.listDays = listDays; }
+
+    public void setFoodLocation(String foodLocation) { this.foodLocation = foodLocation; }
+
+    public void setLongitude(float longitude) { this.longitude = longitude; }
+
+    public void setLatitude(float latitude) { this.latitude = latitude; }
+
+    public void setPublisher(Object publisher) { this.publisher = publisher; }
 }
