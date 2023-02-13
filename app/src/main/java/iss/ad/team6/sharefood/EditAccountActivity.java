@@ -35,12 +35,16 @@ import okhttp3.Response;
 public class EditAccountActivity extends BaseActivity implements View.OnClickListener {
     private static final String TAG =EditAccountActivity.class.getSimpleName();
     private ActivityEditAccountBinding mBinding;
+    private String userId;
 
     @Override
     protected void initView() {
         mBinding = ActivityEditAccountBinding.inflate(getLayoutInflater());
         setContentView(mBinding.getRoot());
         mBinding.btnNext.setOnClickListener(this);
+
+        SharedPreferences pref=getSharedPreferences("loginsp",MODE_PRIVATE);
+        userId = pref.getString("userId","");
     }
 
     private void doNext(){
@@ -54,9 +58,10 @@ public class EditAccountActivity extends BaseActivity implements View.OnClickLis
             showToast("invalid password");
             return;
         }
-        Map<String, String> params = new HashMap<>();
+        Map<String, Object> params = new HashMap<>();
         params.put("userName", userName);
         params.put("password", password);
+        params.put("userId", userId);
         HttpUtil.post_json(Api.api_edit_account, params, new HttpUtil.OnGetDataCallback() {
             @Override
             public void onGetSuccess(String json) {

@@ -130,7 +130,7 @@ public class ShowPageFragment extends Fragment implements AdapterView.OnItemClic
             else if(method == "POST")
             {
                 String json = (String)params[2];
-                builder.post(RequestBody.create(MediaType.get("application/json; charset=utf-8"), json));
+                builder.post(RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json));
             }
 
             Request request = builder.build();

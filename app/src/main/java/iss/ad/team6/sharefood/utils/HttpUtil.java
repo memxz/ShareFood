@@ -179,7 +179,7 @@ public class HttpUtil {
             }
         });
     }
-    public static void post_json(String url,Map<String,String> params,OnGetDataCallback callback){
+    public static void post_json(String url,Map<String,Object> params,OnGetDataCallback callback){
         MediaType JSON=MediaType.parse("application/json;charset=utf-8");
         JSONObject jsJson=new JSONObject();
         try {
