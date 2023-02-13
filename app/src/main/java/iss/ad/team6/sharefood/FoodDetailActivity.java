@@ -19,9 +19,18 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.OnMapsSdkInitializedCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.util.Map;
 
 import iss.ad.team6.sharefood.bean.FoodBean;
 import iss.ad.team6.sharefood.bean.FoodType;
@@ -38,7 +47,7 @@ import uk.co.senab.photoview.PhotoView;
 /**
  * Click image to view detail
  */
-public class FoodDetailActivity extends AppCompatActivity {
+public class FoodDetailActivity extends AppCompatActivity implements OnMapReadyCallback {
     private String userId;
     private String shareId;
     private String userHeadimg;
@@ -71,9 +80,18 @@ public class FoodDetailActivity extends AppCompatActivity {
     private Button requestButton;
     private Button completeButton;
     private Button cancelReqButton;
+    private static final LatLng SFO = new LatLng(1.3742107305278901, 103.76726999611022);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MapsInitializer.initialize(this, MapsInitializer.Renderer.LATEST, new OnMapsSdkInitializedCallback() {
+            @Override
+            public void onMapsSdkInitialized(@NonNull MapsInitializer.Renderer renderer) {
+                //println(it.name)
+                 Log.d("TAG", "onMapsSdkInitialized: ");
+            }
+        });
         setContentView(R.layout.activity_fooddetail);
         SharedPreferences pref = getSharedPreferences("loginsp", MODE_PRIVATE);
         userId=pref.getString("userId","");
@@ -115,6 +133,12 @@ public class FoodDetailActivity extends AppCompatActivity {
         requestButton = (Button) findViewById(R.id.requestBtn);
         cancelReqButton=findViewById(R.id.cancelReqBtn);
         completeButton = (Button) findViewById(R.id.completeBtn);
+        requestButton.setVisibility(View.GONE);
+        cancelReqButton.setVisibility(View.GONE);
+        completeButton.setVisibility(View.GONE);
+        SupportMapFragment mapFragment =
+                (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
 
        /* //Comment
         tv_comment = findViewById(R.id.jump_test);
@@ -332,7 +356,7 @@ public class FoodDetailActivity extends AppCompatActivity {
             puserid=responseData.getPublisher().getUserId().toString();//publisher
             if(responseData.isPendingPickup() && !responseData.isCollected() && responseData.isListed()){
                 available="Blocked & Pending for pick-up";
-                if(puserid!=null && puserid!="0" && puserid.equals(userId)) {
+                if(puserid!=null && puserid!="0" && !puserid.equals(userId)) {
                     requestButton.setVisibility(View.GONE);
                     cancelReqButton.setVisibility(View.VISIBLE);
                     completeButton.setVisibility(View.VISIBLE);
@@ -377,4 +401,16 @@ public class FoodDetailActivity extends AppCompatActivity {
             Glide.with(FoodDetailActivity.this).load(msg.obj).into(iv_picture);
 
         }
+
+    /**
+     * This is where we can add markers or lines, add listeners or move the camera. In this case,
+     * we
+     * just add a marker near Africa.
+     */
+    @Override
+    public void onMapReady(GoogleMap map) {
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(SFO, 18));
+        //map.animateCamera(CameraUpdateFactory.newLatLngZoom(SFO,14));
+        map.addMarker(new MarkerOptions().position(SFO).title("Marker"));
+    }
 }
