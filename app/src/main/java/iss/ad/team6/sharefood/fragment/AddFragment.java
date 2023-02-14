@@ -225,7 +225,7 @@ public class AddFragment<OkHttpClient, FormBody> extends Fragment {
                     String JsonStr=post.toJson(createFoodMap);
                     String method = "POST";
                     OkHttpHandler createHandler= new OkHttpHandler();
-
+                    createHandler.execute(createFoodUrl, method, JsonStr);
                 }
             });
         }
