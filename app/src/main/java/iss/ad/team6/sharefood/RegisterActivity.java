@@ -43,7 +43,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             showToast("invalid password");
             return;
         }
-        if (isEmptyStr(userName)||userName.length()<6) {
+        if (isEmptyStr(userName)||userName.length()<8) {
             showToast("user name cannot be empty and length must be longer than 6");
             return;
         }
