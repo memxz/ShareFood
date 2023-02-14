@@ -61,9 +61,9 @@ public class HistoryActivity extends BaseActivity {
 
     private void getDatas(){
         Map<String, String> params = new HashMap<>();
-        params.put("isCollected", "true");
+        //params.put("isCollected", "true");
         params.put("userId", userId);
-        HttpUtil.get(Api.api_history, params, new HttpUtil.OnGetDataCallback() {
+        HttpUtil.get2(Api.api_history, params, new HttpUtil.OnGetDataCallback() {
             @Override
             public void onGetSuccess(String json) {
                 Log.d(TAG, "onGetSuccess: json = "+json);
