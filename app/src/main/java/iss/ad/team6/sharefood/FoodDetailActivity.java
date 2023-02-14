@@ -81,6 +81,7 @@ public class FoodDetailActivity extends AppCompatActivity implements OnMapReadyC
     private Button completeButton;
     private Button cancelReqButton;
     private LatLng pickLocation;// = new LatLng(1.3742107305278901, 103.76726999611022);
+    private String requestId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -180,6 +181,7 @@ public class FoodDetailActivity extends AppCompatActivity implements OnMapReadyC
             MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
             //Set Pending to false to cancel request
             responseData.setPendingPickup(true);
+            responseData.setRequestId(Long.parseLong(userId));
             String json=new Gson().toJson(responseData);
             //request
             Request request = new Request.Builder()
@@ -208,6 +210,7 @@ public class FoodDetailActivity extends AppCompatActivity implements OnMapReadyC
             MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
             //Set Pending to false to cancel request
             responseData.setPendingPickup(false);
+            responseData.setRequestId(null);
             String json=new Gson().toJson(responseData);
             //request
             Request request = new Request.Builder()
@@ -354,9 +357,10 @@ public class FoodDetailActivity extends AppCompatActivity implements OnMapReadyC
             content = responseData.getDescription();//Description
             username = responseData.getPublisher().getUserName();//publisher
             puserid=responseData.getPublisher().getUserId().toString();//publisher
+            requestId=responseData.getRequestId()==null?null:responseData.getRequestId().toString();
             if(responseData.isPendingPickup() && !responseData.isCollected() && responseData.isListed()){
                 available="Blocked & Pending for pick-up";
-                if(puserid!=null && puserid!="0" && !puserid.equals(userId)) {
+                if(puserid!=null && puserid!="0" && !puserid.equals(userId) && userId.equals(requestId)) {
                     requestButton.setVisibility(View.GONE);
                     cancelReqButton.setVisibility(View.VISIBLE);
                     completeButton.setVisibility(View.VISIBLE);
@@ -376,7 +380,7 @@ public class FoodDetailActivity extends AppCompatActivity implements OnMapReadyC
                 Log.d("111111==PendingPickup==Collected==Listed","false==true==true");
 
             }
-            else if(!responseData.isPendingPickup() && !responseData.isCollected() && responseData.isListed()){
+            else if(!responseData.isPendingPickup() && !responseData.isCollected() && responseData.isListed() && !puserid.equals(userId)){
                 available="Grab this";
                 requestButton.setVisibility(View.VISIBLE);
                 cancelReqButton.setVisibility(View.GONE);

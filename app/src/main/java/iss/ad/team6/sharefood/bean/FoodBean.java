@@ -45,6 +45,9 @@ public class FoodBean {
     @SerializedName("latitude")
     private double latitude;
 
+    @SerializedName("requestId")
+    private Long requestId;
+
     public Long getFoodId() {
         return foodId;
     }
@@ -133,11 +136,11 @@ public class FoodBean {
         this.publisher = publisher;
     }
 
-    public Double getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(Double longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
@@ -147,6 +150,14 @@ public class FoodBean {
 
     public void setLatitude(double latitude) {
         this.latitude = latitude;
+    }
+
+    public Long getRequestId() {
+        return requestId;
+    }
+
+    public void setRequestId(Long requestId) {
+        this.requestId = requestId;
     }
 
     @Override
