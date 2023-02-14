@@ -8,11 +8,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import iss.ad.team6.sharefood.fragment.EmptyFragment;
+import iss.ad.team6.sharefood.fragment.AddFragment;
 import iss.ad.team6.sharefood.fragment.ManageAccountFragment;
 import iss.ad.team6.sharefood.fragment.ShowPageFragment;
 import iss.ad.team6.sharefood.utils.Utils;
@@ -62,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements OnTabActionListen
         i++;
         TabHost.TabSpec tabSpec_1 = fragment_tab_host.newTabSpec(i + "");
         tabSpec_1.setIndicator(getMenuView(i));
-        fragment_tab_host.addTab(tabSpec_1, EmptyFragment.class, null);
+        fragment_tab_host.addTab(tabSpec_1, AddFragment.class, null);
 
         i++;
         TabHost.TabSpec tabSpec_2 = fragment_tab_host.newTabSpec(i + "");
