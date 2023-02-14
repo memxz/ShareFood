@@ -5,6 +5,6 @@ public class Api {
     public static final String api_register = baseUrl+ "/api/individual/save";
     public static final String api_login =baseUrl+ "/api/individual/authenticate";
     public static final String api_edit_account = baseUrl+ "/api/individual/update";
-    public static final String api_history = baseUrl+ "/api/food/collected";
+    public static final String api_history = baseUrl+ "/api/food/get-list/collected";
     public static final String api_all = baseUrl+ "/api/food/get-all";
 }
