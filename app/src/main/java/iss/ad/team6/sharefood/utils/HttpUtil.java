@@ -61,6 +61,38 @@ public class HttpUtil {
         });
     }
 
+    public static void get2(String url, Map<String, String> params, OnGetDataCallback callback) {
+        String parseUrl = Utils.parseGetUrls(url,params);
+        Request request = new Request.Builder().url(parseUrl).build();
+        Call call = client.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (callback!=null){
+                            callback.onGetFailed(e.getMessage());
+                        }
+                    }
+                });
+            }
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                String json = response.body().string();
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (callback!=null){
+                            callback.onGetSuccess(json);
+                        }
+                    }
+                });
+
+            }
+        });
+    }
+
     public static void post(String url, Map<String, String> params, OnGetDataCallback callback) {
         FormBody.Builder builder = new FormBody.Builder();
         if (params!=null){

@@ -23,6 +23,23 @@ public class Utils {
 
         return builder.toString();
     }
+    //newly add for parse api/{userId} format
+    public static String parseGetUrls(String url, Map<String, String> params){
+        StringBuilder builder = new StringBuilder(url);
+        if (params!=null){
+            int num = 0;
+            for (Map.Entry<String, String> entry : params.entrySet()) {
+                if (num == 0){
+                    builder.append("/"+entry.getValue());
+                    num++;
+                }else {
+                    builder.append("");
+                }
+            }
+        }
+
+        return builder.toString();
+    }
     public static ColorStateList getColorStateList(int normal, int pressed, int selected, int unable) {
         int[] colors = new int[]{pressed, pressed, selected, unable, normal};
         int[][] states = new int[5][];
