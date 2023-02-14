@@ -37,7 +37,7 @@ import okhttp3.Response;
 
 public class ShowPageFragment extends Fragment implements AdapterView.OnItemClickListener {
 
-    public final String foodlistUrl ="https://card-service-cloudrun-lmgpq3qg3a-et.a.run.app/card-service/api/food/get-list";//https://v99xcpwju4.execute-api.ap-northeast-1.amazonaws.com/FoodDelieveryTest/getfoodlist/";
+    public final String foodlistUrl ="https://card-service-cloudrun-lmgpq3qg3a-et.a.run.app/card-service/api/food/get-all";//https://v99xcpwju4.execute-api.ap-northeast-1.amazonaws.com/FoodDelieveryTest/getfoodlist/";
     public final String searchUrl="https://v99xcpwju4.execute-api.ap-northeast-1.amazonaws.com/FoodDelieveryTest/getsearchlist/";
     ListView foodListView;
     List<FoodBean> foodList;
@@ -130,7 +130,7 @@ public class ShowPageFragment extends Fragment implements AdapterView.OnItemClic
             else if(method == "POST")
             {
                 String json = (String)params[2];
-                builder.post(RequestBody.create(MediaType.get("application/json; charset=utf-8"), json));
+                builder.post(RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json));
             }
 
             Request request = builder.build();
