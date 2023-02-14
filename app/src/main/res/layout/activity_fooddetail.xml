@@ -58,12 +58,14 @@
         android:scaleType="centerCrop" />
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="280dp">
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        android:layout_marginTop="280dp"
+        android:layout_above="@+id/bottomBtnGroup">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center_horizontal"
             android:layout_marginStart="@dimen/dp_23"
@@ -180,32 +182,51 @@
                     android:background="@color/cardview_shadow_start_color"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
+
             </LinearLayout>
-            <Button android:text="Raise Request"
-                android:id="@+id/requestBtn"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom = "true">
-            </Button>
-            <Button android:text="Cancel Request"
-                android:id="@+id/cancelReqBtn"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom = "true">
-            </Button>
-            <Button android:text="Confirm Received"
-                android:id="@+id/completeBtn"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom = "true">
-            </Button>
+            <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+                <TextView
+                    style="@style/text_input_desc_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Location" />
+                <fragment
+                    android:id="@+id/map"
+                    android:layout_width="wrap_content"
+                    android:layout_height="300dp"
+                    class="com.google.android.gms.maps.SupportMapFragment" />
+            </LinearLayout>
+
         </LinearLayout>
+
     </androidx.core.widget.NestedScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bottomBtnGroup"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
 
+        <Button android:text="Raise Request"
+            android:id="@+id/requestBtn"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+        </Button>
+        <Button android:text="Cancel Request"
+            android:id="@+id/cancelReqBtn"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+        </Button>
+        <Button android:text="Confirm Received"
+            android:id="@+id/completeBtn"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+        </Button>
 
-
-
-
+    </LinearLayout>
 
 
     <!--<TextView

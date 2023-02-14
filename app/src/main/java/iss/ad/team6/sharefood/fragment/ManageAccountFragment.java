@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import iss.ad.team6.sharefood.EditAccountActivity;
+import iss.ad.team6.sharefood.HistoryActivity;
 import iss.ad.team6.sharefood.LoginActivity;
 import iss.ad.team6.sharefood.R;
 
@@ -47,7 +48,10 @@ public class ManageAccountFragment extends Fragment implements View.OnClickListe
                 }
                 break;
             case R.id.menu_1:
-                //TODO 待订单做完后,加上管理历史账单
+                {
+                    Intent intent=new Intent(getActivity(), HistoryActivity.class);
+                    startActivity(intent);
+                }
                 break;
             case R.id.menu_2://todo logout
             {

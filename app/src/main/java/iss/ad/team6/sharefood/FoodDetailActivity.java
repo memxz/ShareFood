@@ -19,9 +19,18 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.OnMapsSdkInitializedCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.util.Map;
 
 import iss.ad.team6.sharefood.bean.FoodBean;
 import iss.ad.team6.sharefood.bean.FoodType;
@@ -38,7 +47,7 @@ import uk.co.senab.photoview.PhotoView;
 /**
  * Click image to view detail
  */
-public class FoodDetailActivity extends AppCompatActivity {
+public class FoodDetailActivity extends AppCompatActivity implements OnMapReadyCallback {
     private String userId;
     private String shareId;
     private String userHeadimg;
@@ -71,9 +80,19 @@ public class FoodDetailActivity extends AppCompatActivity {
     private Button requestButton;
     private Button completeButton;
     private Button cancelReqButton;
+    private LatLng pickLocation;// = new LatLng(1.3742107305278901, 103.76726999611022);
+    private String requestId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MapsInitializer.initialize(this, MapsInitializer.Renderer.LATEST, new OnMapsSdkInitializedCallback() {
+            @Override
+            public void onMapsSdkInitialized(@NonNull MapsInitializer.Renderer renderer) {
+                //println(it.name)
+                 Log.d("TAG", "onMapsSdkInitialized: ");
+            }
+        });
         setContentView(R.layout.activity_fooddetail);
         SharedPreferences pref = getSharedPreferences("loginsp", MODE_PRIVATE);
         userId=pref.getString("userId","");
@@ -115,6 +134,12 @@ public class FoodDetailActivity extends AppCompatActivity {
         requestButton = (Button) findViewById(R.id.requestBtn);
         cancelReqButton=findViewById(R.id.cancelReqBtn);
         completeButton = (Button) findViewById(R.id.completeBtn);
+        requestButton.setVisibility(View.GONE);
+        cancelReqButton.setVisibility(View.GONE);
+        completeButton.setVisibility(View.GONE);
+        SupportMapFragment mapFragment =
+                (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
 
        /* //Comment
         tv_comment = findViewById(R.id.jump_test);
@@ -156,6 +181,7 @@ public class FoodDetailActivity extends AppCompatActivity {
             MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
             //Set Pending to false to cancel request
             responseData.setPendingPickup(true);
+            responseData.setRequestId(Long.parseLong(userId));
             String json=new Gson().toJson(responseData);
             //request
             Request request = new Request.Builder()
@@ -184,6 +210,7 @@ public class FoodDetailActivity extends AppCompatActivity {
             MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
             //Set Pending to false to cancel request
             responseData.setPendingPickup(false);
+            responseData.setRequestId(null);
             String json=new Gson().toJson(responseData);
             //request
             Request request = new Request.Builder()
@@ -330,9 +357,10 @@ public class FoodDetailActivity extends AppCompatActivity {
             content = responseData.getDescription();//Description
             username = responseData.getPublisher().getUserName();//publisher
             puserid=responseData.getPublisher().getUserId().toString();//publisher
+            requestId=responseData.getRequestId()==null?null:responseData.getRequestId().toString();
             if(responseData.isPendingPickup() && !responseData.isCollected() && responseData.isListed()){
                 available="Blocked & Pending for pick-up";
-                if(puserid!=null && puserid!="0" && puserid.equals(userId)) {
+                if(puserid!=null && puserid!="0" && !puserid.equals(userId) && userId.equals(requestId)) {
                     requestButton.setVisibility(View.GONE);
                     cancelReqButton.setVisibility(View.VISIBLE);
                     completeButton.setVisibility(View.VISIBLE);
@@ -352,7 +380,7 @@ public class FoodDetailActivity extends AppCompatActivity {
                 Log.d("111111==PendingPickup==Collected==Listed","false==true==true");
 
             }
-            else if(!responseData.isPendingPickup() && !responseData.isCollected() && responseData.isListed()){
+            else if(!responseData.isPendingPickup() && !responseData.isCollected() && responseData.isListed() && !puserid.equals(userId)){
                 available="Grab this";
                 requestButton.setVisibility(View.VISIBLE);
                 cancelReqButton.setVisibility(View.GONE);
@@ -377,4 +405,18 @@ public class FoodDetailActivity extends AppCompatActivity {
             Glide.with(FoodDetailActivity.this).load(msg.obj).into(iv_picture);
 
         }
+
+    /**
+     * This is where we can add markers or lines, add listeners or move the camera. In this case,
+     * we
+     * just add a marker near Africa.
+     */
+    @Override
+    public void onMapReady(GoogleMap map) {
+        //pickLocation= new LatLng(responseData.getLatitude(),responseData.getLongitude());
+        pickLocation= new LatLng(1.3742107305278901, 103.76726999611022);
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(pickLocation, 18));
+        //map.animateCamera(CameraUpdateFactory.newLatLngZoom(SFO,14));
+        map.addMarker(new MarkerOptions().position(pickLocation).title("Pick-up Point"));
+    }
 }

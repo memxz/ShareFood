@@ -43,15 +43,15 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             showToast("invalid password");
             return;
         }
-        if (isEmptyStr(userName)) {
-            showToast("user name cannot be empty");
+        if (isEmptyStr(userName)||userName.length()<8) {
+            showToast("user name cannot be empty and length must be longer than 6");
             return;
         }
 
-        Map<String, String> params = new HashMap<>();
+        Map<String, Object> params = new HashMap<>();
         params.put("userName", userName);
         params.put("password", password);
-        params.put("phone", phone);
+        params.put("phone", phone.startsWith("+")?phone:"+"+phone);
         params.put("email", email);
         params.put("salary", salary);
         params.put("role", role);
@@ -63,6 +63,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        if (json==null||json.length()==0){
+                            showToast("register failed");
+                            return;
+                        }
                         LoginBean resp = new Gson().fromJson(json, LoginBean.class);
                         //if (resp.isSuccess()){
                         if(resp.getUserId()!=null){
