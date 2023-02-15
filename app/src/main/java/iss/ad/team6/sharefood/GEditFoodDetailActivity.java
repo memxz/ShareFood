@@ -7,47 +7,50 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import iss.ad.team6.sharefood.base.BaseActivity;
+import iss.ad.team6.sharefood.bean.FoodBean;
 import iss.ad.team6.sharefood.utils.Api;
 import iss.ad.team6.sharefood.utils.HttpUtil;
 
-public class EditAccountActivity extends BaseActivity implements View.OnClickListener {
-    private static final String TAG = EditAccountActivity.class.getSimpleName();
+public class GEditFoodDetailActivity extends BaseActivity implements View.OnClickListener {
+    private static final String TAG = GEditFoodDetailActivity.class.getSimpleName();
     private String userId;
     private TextView btnNext;
-    private EditText etUName, etPassword;
+    private EditText etTitle, etDetail;
+
+    private FoodBean data;
 
     @Override
     protected void initView() {
-        setContentView(R.layout.activity_edit_account);
+        data = (FoodBean) getIntent().getSerializableExtra("DATA");
+        setContentView(R.layout.g_activity_edit_food_detail);
         btnNext = findViewById(R.id.btn_next);
-        etUName = findViewById(R.id.et_uName);
-        etPassword = findViewById(R.id.et_password);
+        etTitle = findViewById(R.id.et_title);
+        etDetail = findViewById(R.id.et_detail);
         btnNext.setOnClickListener(this);
 
         SharedPreferences pref = getSharedPreferences("loginsp", MODE_PRIVATE);
         userId = pref.getString("userId", "");
+
+        etTitle.setText(data.getTitle());
+        etDetail.setText(data.getDescription());
     }
 
     private void doNext() {
-        String userName = etUName.getText().toString().trim();
-        String password = etPassword.getText().toString().trim();
-        if (isEmptyStr(userName)) {
-            showToast("user name cannot be empty");
+        String title = etTitle.getText().toString().trim();
+        String detail = etDetail.getText().toString().trim();
+        if (isEmptyStr(title)) {
+            showToast("food title cannot be empty");
             return;
         }
-        if (isEmptyStr(password) || password.length() < 6) {
-            showToast("invalid password");
+        if (isEmptyStr(detail)) {
+            showToast("food detail cannot be empty");
             return;
         }
-        Map<String, Object> params = new HashMap<>();
-        params.put("userName", userName);
-        params.put("password", password);
-        params.put("userId", userId);
-        HttpUtil.post_json(Api.api_edit_account, params, new HttpUtil.OnGetDataCallback() {
+        data.setTitle(title);
+        data.setDescription(detail);
+
+        HttpUtil.put_json(Api.api_edit_food, data, new HttpUtil.OnGetDataCallback() {
             @Override
             public void onGetSuccess(String json) {
                 Log.d(TAG, "onGetSuccess: json = " + json);
