@@ -21,13 +21,13 @@ import iss.ad.team6.sharefood.utils.tabhost.TabHost;
 import iss.ad.team6.sharefood.utils.tabhost.TabWidget;
 
 public class MainActivity extends AppCompatActivity implements OnTabActionListener {
-    public static String[] MAIN_MENU = {"Home", "Find Food","Manage Account"};
+    public static String[] MAIN_MENU = {"Home", "Add Food","Manage Account"};
     private FragmentTabHost fragment_tab_host;
     private TabWidget tabWidget;
     //点击图片数组
-    private int[] menu_on_ids = {R.mipmap.icon_home, R.mipmap.icon_search, R.mipmap.icon_me,};
+    private int[] menu_on_ids = {R.mipmap.icon_home, R.mipmap.icon_add, R.mipmap.icon_me,};
     //默认图片数组
-    private int[] menu_nol_ids = {R.mipmap.icon_home, R.mipmap.icon_search, R.mipmap.icon_me,};
+    private int[] menu_nol_ids = {R.mipmap.icon_home, R.mipmap.icon_add, R.mipmap.icon_me,};
 
     private String[] menu_str_arr;
     private
