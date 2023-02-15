@@ -12,16 +12,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import iss.ad.team6.sharefood.Adapter.HistoryAdapter;
-import iss.ad.team6.sharefood.base.BaseActivity;
+import iss.ad.team6.sharefood.adapter.HistoryAdapter;
 import iss.ad.team6.sharefood.bean.FoodBean;
-import iss.ad.team6.sharefood.bean.LoginBean;
 import iss.ad.team6.sharefood.utils.Api;
+import iss.ad.team6.sharefood.utils.BaseActivity;
 import iss.ad.team6.sharefood.utils.HttpUtil;
 
 public class HistoryActivity extends BaseActivity {
 
-    private final String TAG =HistoryActivity.class.getSimpleName();
+    private final String TAG = HistoryActivity.class.getSimpleName();
 
     private String userId;
 
@@ -32,8 +31,8 @@ public class HistoryActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        SharedPreferences pref=getSharedPreferences("loginsp",MODE_PRIVATE);
-        userId = pref.getString("userId","");
+        SharedPreferences pref = getSharedPreferences("loginsp", MODE_PRIVATE);
+        userId = pref.getString("userId", "");
 
         setContentView(R.layout.activity_history);
         lv_list = findViewById(R.id.lv_list);
@@ -43,12 +42,12 @@ public class HistoryActivity extends BaseActivity {
         getDatas();
     }
 
-    private void showDatas(List<FoodBean> datas){
+    private void showDatas(List<FoodBean> datas) {
         List<FoodBean> filter_datas = new ArrayList<>();
         {
-            if (datas!=null){
-                for (FoodBean data:datas){
-                    if (data.isCollected()){
+            if (datas != null) {
+                for (FoodBean data : datas) {
+                    if (data.isCollected()) {
                         filter_datas.add(data);
                     }
                 }
@@ -59,29 +58,31 @@ public class HistoryActivity extends BaseActivity {
         adapter.notifyDataSetChanged();
     }
 
-    private void getDatas(){
+    private void getDatas() {
         Map<String, String> params = new HashMap<>();
         //params.put("isCollected", "true");
         params.put("userId", userId);
         HttpUtil.get2(Api.api_history, params, new HttpUtil.OnGetDataCallback() {
             @Override
             public void onGetSuccess(String json) {
-                Log.d(TAG, "onGetSuccess: json = "+json);
+                Log.d(TAG, "onGetSuccess: json = " + json);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (json==null||json.length()==0){
+                        if (json == null || json.length() == 0) {
                             showToast("cannot load history orders");
                             return;
                         }
-                        List<FoodBean> datas = new Gson().fromJson(json,new TypeToken<List<FoodBean>>(){}.getType());
+                        List<FoodBean> datas = new Gson().fromJson(json, new TypeToken<List<FoodBean>>() {
+                        }.getType());
                         showDatas(datas);
                     }
                 });
             }
+
             @Override
             public void onGetFailed(String msg) {
-                Log.d(TAG, "onGetFailed: "+msg);
+                Log.d(TAG, "onGetFailed: " + msg);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -91,5 +92,5 @@ public class HistoryActivity extends BaseActivity {
             }
         });
 
-}
+    }
 }

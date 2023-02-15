@@ -1,7 +1,5 @@
 package iss.ad.team6.sharefood.bean;
 
-import android.location.Location;
-
 import com.google.gson.annotations.SerializedName;
 
 public class FoodBean {

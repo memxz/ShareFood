@@ -2,8 +2,6 @@ package iss.ad.team6.sharefood.bean;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.time.LocalDate;
-
 public class LoginBean {
     @SerializedName("userId")
     private Long userId;

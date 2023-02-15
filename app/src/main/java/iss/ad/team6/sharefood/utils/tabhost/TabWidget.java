@@ -286,7 +286,7 @@ public class TabWidget extends LinearLayout implements OnFocusChangeListener {
         }
     }
 
-    private void setSelectedTab(int mTabIndex){
+    private void setSelectedTab(int mTabIndex) {
         if (mOnTabActionListener != null) {
             if (mOnTabActionListener.onTabClick(mTabIndex)) {
                 return;

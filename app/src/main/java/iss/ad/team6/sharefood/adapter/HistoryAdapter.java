@@ -1,4 +1,4 @@
-package iss.ad.team6.sharefood.Adapter;
+package iss.ad.team6.sharefood.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +27,7 @@ public class HistoryAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return datas ==null?0:datas.size();
+        return datas == null ? 0 : datas.size();
     }
 
     @Override
@@ -42,14 +42,13 @@ public class HistoryAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup parent) {
-        if(view==null)
-        {
-            view= LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_history,parent,false);
+        if (view == null) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_history, parent, false);
         }
 
-        ImageView imageView= view.findViewById(R.id.imageview);
-        TextView title=view.findViewById(R.id.foodName);
-        TextView description=view.findViewById(R.id.foodDescription);
+        ImageView imageView = view.findViewById(R.id.imageview);
+        TextView title = view.findViewById(R.id.foodName);
+        TextView description = view.findViewById(R.id.foodDescription);
 
         FoodBean data = getItem(i);
 

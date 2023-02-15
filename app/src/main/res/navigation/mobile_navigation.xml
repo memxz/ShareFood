@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_photodiscovery"
-        android:name="iss.ad.team6.sharefood.Discovery.ListFragment"
+        android:name="iss.ad.team6.sharefood.discovery.ListFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_list" />
 

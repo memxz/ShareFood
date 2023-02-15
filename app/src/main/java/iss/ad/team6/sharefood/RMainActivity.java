@@ -1,28 +1,27 @@
 package iss.ad.team6.sharefood;
 
-import androidx.annotation.ColorInt;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.ColorInt;
+import androidx.appcompat.app.AppCompatActivity;
+
 import iss.ad.team6.sharefood.fragment.EmptyFragment;
-import iss.ad.team6.sharefood.fragment.ManageAccountFragment;
-import iss.ad.team6.sharefood.fragment.ShowPageFragment;
+import iss.ad.team6.sharefood.fragment.RManageAccountFragment;
+import iss.ad.team6.sharefood.fragment.RShowPageFragment;
 import iss.ad.team6.sharefood.utils.Utils;
 import iss.ad.team6.sharefood.utils.tabhost.FragmentTabHost;
 import iss.ad.team6.sharefood.utils.tabhost.OnTabActionListener;
 import iss.ad.team6.sharefood.utils.tabhost.TabHost;
 import iss.ad.team6.sharefood.utils.tabhost.TabWidget;
 
-public class MainActivity extends AppCompatActivity implements OnTabActionListener {
-    public static String[] MAIN_MENU = {"Home", "Find Food","Manage Account"};
+public class RMainActivity extends AppCompatActivity implements OnTabActionListener {
+    public static String[] MAIN_MENU = {"Home", "Find Food", "Manage Account"};
     private FragmentTabHost fragment_tab_host;
     private TabWidget tabWidget;
     //点击图片数组
@@ -35,14 +34,15 @@ public class MainActivity extends AppCompatActivity implements OnTabActionListen
     @ColorInt int menu_on_color, menu_nol_color;
     private int lastPosition = 0;
     private int nowPosition = 0;
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_main);
-            initViews();
-        }
 
-    private void initViews(){
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.r_activity_main);
+        initViews();
+    }
+
+    private void initViews() {
         fragment_tab_host = findViewById(android.R.id.tabhost);
         fragment_tab_host.setup(this, getSupportFragmentManager(), android.R.id.tabcontent);
         tabWidget = fragment_tab_host.getTabWidget();
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements OnTabActionListen
         int i = 0;
         TabHost.TabSpec tabSpec_0 = fragment_tab_host.newTabSpec(i + "");
         tabSpec_0.setIndicator(getMenuView(i));
-        fragment_tab_host.addTab(tabSpec_0, ShowPageFragment.class, null);
+        fragment_tab_host.addTab(tabSpec_0, RShowPageFragment.class, null);
 
         i++;
         TabHost.TabSpec tabSpec_1 = fragment_tab_host.newTabSpec(i + "");
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements OnTabActionListen
         i++;
         TabHost.TabSpec tabSpec_2 = fragment_tab_host.newTabSpec(i + "");
         tabSpec_2.setIndicator(getMenuView(i));
-        fragment_tab_host.addTab(tabSpec_2, ManageAccountFragment.class, null);
+        fragment_tab_host.addTab(tabSpec_2, RManageAccountFragment.class, null);
     }
 
     private View getMenuView(int position) {
@@ -104,11 +104,12 @@ public class MainActivity extends AppCompatActivity implements OnTabActionListen
             fragment_tab_host.setCurrentTab(nowPosition);
         }
     }
-        public  void logout(View view){
-            SharedPreferences sharedpreferences = getSharedPreferences("loginsp", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.clear();
-            editor.apply();
-        }
 
+    public void logout(View view) {
+        SharedPreferences sharedpreferences = getSharedPreferences("loginsp", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.clear();
+        editor.apply();
     }
+
+}
