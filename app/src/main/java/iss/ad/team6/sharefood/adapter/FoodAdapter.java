@@ -15,14 +15,14 @@ import java.util.List;
 
 import iss.ad.team6.sharefood.R;
 import iss.ad.team6.sharefood.bean.FoodBean;
-import iss.ad.team6.sharefood.fragment.RShowPageFragment;
+import iss.ad.team6.sharefood.fragment.ShowPageFragment;
 
 public class FoodAdapter extends ArrayAdapter<FoodBean> {
     protected List<FoodBean> foodList;
-    private final RShowPageFragment context;
+    private final ShowPageFragment context;
 
 
-    public FoodAdapter(RShowPageFragment context, List<FoodBean> foodList) {
+    public FoodAdapter(ShowPageFragment context, List<FoodBean> foodList) {
         super(context.getActivity(), 0, foodList);
         this.context = context;
         this.foodList = foodList;

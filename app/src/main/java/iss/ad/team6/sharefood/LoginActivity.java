@@ -202,12 +202,15 @@ public class LoginActivity extends AppCompatActivity {
 
                             input();
 
-                            Intent intent = new Intent(LoginActivity.this, RMainActivity.class); //RMainActivity.class); //now temp jump to main/menu activity
-                            //newly add for detailActivity
-                            intent.putExtra("userInfo", responseData);
-
-                            startActivity(intent);
-
+                            if (bean.getRole().name().equals("receiver")){
+                                Intent intent = new Intent(LoginActivity.this, RMainActivity.class); //RMainActivity.class); //now temp jump to main/menu activity
+                                intent.putExtra("userInfo", responseData);
+                                startActivity(intent);
+                            }else if(bean.getRole().name().equals("giver")){
+                                Intent intent = new Intent(LoginActivity.this, GMainActivity.class); //RMainActivity.class); //now temp jump to main/menu activity
+                                intent.putExtra("userInfo", responseData);
+                                startActivity(intent);
+                            }
                             finish();
                         } else {
                             Toast.makeText(LoginActivity.this,

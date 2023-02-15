@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<iss.ad.team6.sharefood.utils.tabhost.FragmentTabHost xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@android:id/tabhost"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <iss.ad.team6.sharefood.utils.tabhost.TabWidget
+            android:id="@android:id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@android:color/white" />
+
+        <TextView
+            android:id="@+id/tv_bottom_line"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_above="@android:id/tabs"
+            android:background="#cdcdcd" />
+
+        <FrameLayout
+            android:id="@android:id/tabcontent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/tv_bottom_line" />
+    </RelativeLayout>
+
+</iss.ad.team6.sharefood.utils.tabhost.FragmentTabHost>

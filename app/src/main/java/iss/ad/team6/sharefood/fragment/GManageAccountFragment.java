@@ -11,16 +11,17 @@ import android.widget.LinearLayout;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import iss.ad.team6.sharefood.GEditFoodActivity;
 import iss.ad.team6.sharefood.HistoryActivity;
 import iss.ad.team6.sharefood.LoginActivity;
 import iss.ad.team6.sharefood.R;
 import iss.ad.team6.sharefood.EditAccountActivity;
 
-public class RManageAccountFragment extends Fragment implements View.OnClickListener {
+public class GManageAccountFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.r_fragment_manage_account, container, false);
+        View rootView = inflater.inflate(R.layout.g_fragment_manage_account, container, false);
         initViews(rootView);
         return rootView;
     }
@@ -29,9 +30,11 @@ public class RManageAccountFragment extends Fragment implements View.OnClickList
         LinearLayout menu_0 = view.findViewById(R.id.menu_0);
         LinearLayout menu_1 = view.findViewById(R.id.menu_1);
         LinearLayout menu_2 = view.findViewById(R.id.menu_2);
+        LinearLayout menu_3 = view.findViewById(R.id.menu_3);
         menu_0.setOnClickListener(this);
         menu_1.setOnClickListener(this);
         menu_2.setOnClickListener(this);
+        menu_3.setOnClickListener(this);
     }
 
     @Override
@@ -54,6 +57,12 @@ public class RManageAccountFragment extends Fragment implements View.OnClickList
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
                 getActivity().finish();
+            }
+            break;
+            case R.id.menu_3:
+            {
+                Intent intent = new Intent(getActivity(), GEditFoodActivity.class);
+                startActivity(intent);
             }
             break;
         }

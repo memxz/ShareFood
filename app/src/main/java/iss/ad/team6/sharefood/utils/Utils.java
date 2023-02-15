@@ -3,6 +3,7 @@ package iss.ad.team6.sharefood.utils;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
+import android.text.TextUtils;
 
 import java.util.Map;
 
@@ -75,6 +76,14 @@ public class Utils {
         bg.addState(new int[]{android.R.attr.state_selected}, selected);
         bg.addState(new int[]{}, unabled);
         return bg;
+    }
+
+    public static boolean isNotEmptyStr(String str) {
+        return !TextUtils.isEmpty(str);
+    }
+
+    public static boolean isEmptyStr(String str) {
+        return TextUtils.isEmpty(str);
     }
 
 }

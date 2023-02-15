@@ -36,7 +36,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class RShowPageFragment extends Fragment implements AdapterView.OnItemClickListener {
+public class ShowPageFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     public final String foodlistUrl = "https://card-service-cloudrun-lmgpq3qg3a-et.a.run.app/card-service/api/food/get-all";//https://v99xcpwju4.execute-api.ap-northeast-1.amazonaws.com/FoodDelieveryTest/getfoodlist/";
     public final String searchUrl = "https://v99xcpwju4.execute-api.ap-northeast-1.amazonaws.com/FoodDelieveryTest/getsearchlist/";
@@ -47,7 +47,7 @@ public class RShowPageFragment extends Fragment implements AdapterView.OnItemCli
     RadioButton rb;
     final int cSelectedListMaxSize = 20;
 
-    public RShowPageFragment() {
+    public ShowPageFragment() {
         // Required empty public constructor
     }
 
@@ -55,7 +55,7 @@ public class RShowPageFragment extends Fragment implements AdapterView.OnItemCli
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.r_activity_show_page, container, false);
+        View view = inflater.inflate(R.layout.fragment_show_page, container, false);
         foodListView = view.findViewById(R.id.foodList);
         Button searchBtn = view.findViewById(R.id.searchBtn);
         if (searchBtn != null) {
@@ -172,9 +172,9 @@ public class RShowPageFragment extends Fragment implements AdapterView.OnItemCli
 
         selectedList = foodList.subList(0, Math.min(cSelectedListMaxSize, foodList.size()));
 
-        FoodAdapter adapter = new FoodAdapter(RShowPageFragment.this, selectedList);
+        FoodAdapter adapter = new FoodAdapter(ShowPageFragment.this, selectedList);
         foodListView.setAdapter(adapter);
-        foodListView.setOnItemClickListener(RShowPageFragment.this);
+        foodListView.setOnItemClickListener(ShowPageFragment.this);
     }
 
 

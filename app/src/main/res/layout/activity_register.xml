@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-
-  <androidx.constraintlayout.widget.ConstraintLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      tools:context=".activity.RegisterActivity">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/iv_icon"
@@ -14,8 +10,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_30"
         android:text="@string/app_name"
-        android:textSize="@dimen/sp_28"
         android:textColor="@color/black"
+        android:textSize="@dimen/sp_28"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -25,207 +21,217 @@
         android:id="@+id/ll_form"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginTop="@dimen/dp_20"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:paddingHorizontal="@dimen/dp_50"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_icon">
-      <androidx.core.widget.NestedScrollView
-          android:layout_width="match_parent"
-          android:layout_height="match_parent">
-        <LinearLayout
+
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center_horizontal">
-          <LinearLayout
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <TextView
-                style="@style/text_input_desc_style"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/userName" />
-
-            <EditText
-                android:id="@+id/et_uName"
-                style="@style/input_text_style"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_48"
-                android:layout_marginTop="@dimen/dp_8"
-                android:hint="@string/userNameInput"
-                android:imeOptions="actionNext"
-                android:inputType="text"
-                android:lines="1"
-                android:maxLength="45"
-                android:maxLines="1"
-                android:singleLine="true" />
-          </LinearLayout>
-          <LinearLayout
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="@dimen/dp_10"
-              android:orientation="vertical">
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
-            <TextView
-                style="@style/text_input_desc_style"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/password" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/et_password"
-                style="@style/input_text_style"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_48"
-                android:layout_marginTop="@dimen/dp_8"
-                android:hint="@string/passwordInput"
-                android:imeOptions="actionNext"
-                android:inputType="textPassword"
-                android:lines="1"
-                android:maxLength="50"
-                android:maxLines="1"
-                android:singleLine="true" />
-          </LinearLayout>
-          <LinearLayout
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="@dimen/dp_10"
-              android:orientation="vertical">
+                    <TextView
+                        style="@style/text_input_desc_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/userName" />
 
-            <TextView
-                style="@style/text_input_desc_style"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/email" />
+                    <EditText
+                        android:id="@+id/et_uName"
+                        style="@style/input_text_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_48"
+                        android:layout_marginTop="@dimen/dp_8"
+                        android:hint="@string/userNameInput"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        android:lines="1"
+                        android:maxLength="45"
+                        android:maxLines="1"
+                        android:singleLine="true" />
+                </LinearLayout>
 
-            <EditText
-                android:id="@+id/et_email"
-                style="@style/input_text_style"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_48"
-                android:layout_marginTop="@dimen/dp_8"
-                android:hint="@string/emailInput"
-                android:imeOptions="actionNext"
-                android:inputType="text"
-                android:lines="1"
-                android:maxLength="45"
-                android:maxLines="1"
-                android:singleLine="true" />
-          </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:orientation="vertical">
 
-          <LinearLayout
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="@dimen/dp_10"
-              android:orientation="vertical">
+                    <TextView
+                        style="@style/text_input_desc_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/password" />
 
-            <TextView
-                style="@style/text_input_desc_style"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/phone" />
+                    <EditText
+                        android:id="@+id/et_password"
+                        style="@style/input_text_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_48"
+                        android:layout_marginTop="@dimen/dp_8"
+                        android:hint="@string/passwordInput"
+                        android:imeOptions="actionNext"
+                        android:inputType="textPassword"
+                        android:lines="1"
+                        android:maxLength="50"
+                        android:maxLines="1"
+                        android:singleLine="true" />
+                </LinearLayout>
 
-            <EditText
-                android:id="@+id/et_phone"
-                style="@style/input_text_style"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_48"
-                android:layout_marginTop="@dimen/dp_8"
-                android:hint="@string/phoneInput"
-                android:imeOptions="actionNext"
-                android:inputType="text"
-                android:lines="1"
-                android:maxLength="11"
-                android:maxLines="1"
-                android:singleLine="true" />
-          </LinearLayout>
-          <LinearLayout
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="@dimen/dp_10"
-              android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:orientation="vertical">
 
-            <TextView
-                style="@style/text_input_desc_style"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/salary" />
+                    <TextView
+                        style="@style/text_input_desc_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/email" />
 
-            <EditText
-                android:id="@+id/et_salary"
-                style="@style/input_text_style"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_48"
-                android:layout_marginTop="@dimen/dp_8"
-                android:hint="@string/salaryInput"
-                android:inputType="number"
-                android:imeOptions="actionDone"
-                android:lines="1"
-                android:maxLength="30"
-                android:maxLines="1"
-                android:singleLine="true" />
-          </LinearLayout>
-          <LinearLayout
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="@dimen/dp_10"
-              android:orientation="vertical">
+                    <EditText
+                        android:id="@+id/et_email"
+                        style="@style/input_text_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_48"
+                        android:layout_marginTop="@dimen/dp_8"
+                        android:hint="@string/emailInput"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        android:lines="1"
+                        android:maxLength="45"
+                        android:maxLines="1"
+                        android:singleLine="true" />
+                </LinearLayout>
 
-            <TextView
-                style="@style/text_input_desc_style"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/role" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:orientation="vertical">
 
-            <RadioGroup
-                android:id="@+id/rg_role"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:gravity="center"
-                android:layout_height="wrap_content">
-              <RadioButton
-                  android:id="@+id/rb_1"
-                  android:text="giver "
-                  android:checked="true"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"/>
-              <Space
-                  android:layout_width="@dimen/dp_40"
-                  android:layout_height="@dimen/dp_5"/>
-              <RadioButton
-                  android:id="@+id/rb_2"
-                  android:text="receiver"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"/>
-            </RadioGroup>
-          </LinearLayout>
+                    <TextView
+                        style="@style/text_input_desc_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/phone" />
 
-          <TextView
-              android:id="@+id/btn_register"
-              style="@style/btn_white_style"
-              android:layout_width="match_parent"
-              android:layout_height="@dimen/dp_48"
-              android:layout_marginTop="@dimen/dp_10"
-              android:text="@string/register"
-              android:textStyle="bold" />
-          <TextView
-              android:id="@+id/tv_login"
-              style="@style/text_link_style"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="@dimen/dp_10"
-              android:paddingHorizontal="@dimen/dp_12"
-              android:paddingVertical="@dimen/dp_12"
-              android:text="@string/signIn"
-              app:layout_constraintBottom_toBottomOf="parent"
-              app:layout_constraintLeft_toLeftOf="parent"
-              app:layout_constraintRight_toRightOf="parent" />
-        </LinearLayout>
-      </androidx.core.widget.NestedScrollView>
+                    <EditText
+                        android:id="@+id/et_phone"
+                        style="@style/input_text_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_48"
+                        android:layout_marginTop="@dimen/dp_8"
+                        android:hint="@string/phoneInput"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        android:lines="1"
+                        android:maxLength="11"
+                        android:maxLines="1"
+                        android:singleLine="true" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/text_input_desc_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/salary" />
+
+                    <EditText
+                        android:id="@+id/et_salary"
+                        style="@style/input_text_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_48"
+                        android:layout_marginTop="@dimen/dp_8"
+                        android:hint="@string/salaryInput"
+                        android:imeOptions="actionDone"
+                        android:inputType="number"
+                        android:lines="1"
+                        android:maxLength="30"
+                        android:maxLines="1"
+                        android:singleLine="true" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/text_input_desc_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/role" />
+
+                    <RadioGroup
+                        android:id="@+id/rg_role"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/rb_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="true"
+                            android:text="giver " />
+
+                        <Space
+                            android:layout_width="@dimen/dp_40"
+                            android:layout_height="@dimen/dp_5" />
+
+                        <RadioButton
+                            android:id="@+id/rb_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="receiver" />
+                    </RadioGroup>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/btn_register"
+                    style="@style/btn_white_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:text="@string/register"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_login"
+                    style="@style/text_link_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:paddingHorizontal="@dimen/dp_12"
+                    android:paddingVertical="@dimen/dp_12"
+                    android:text="@string/signIn"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
     </LinearLayout>
-  </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+</androidx.constraintlayout.widget.ConstraintLayout>

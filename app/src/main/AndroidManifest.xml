@@ -33,9 +33,14 @@
             android:name=".RMainActivity"
             android:launchMode="singleTask" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".REditAccountActivity" />
+        <activity android:name=".EditAccountActivity" />
         <activity android:name=".HistoryActivity" />
         <activity android:name=".RFoodDetailActivity" />
+        <activity android:name=".GEditFoodActivity" />
+
+        <activity
+            android:name=".GMainActivity"
+            android:launchMode="singleTask" />
 
     </application>
 

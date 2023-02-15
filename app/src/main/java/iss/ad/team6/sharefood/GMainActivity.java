@@ -12,7 +12,7 @@ import androidx.annotation.ColorInt;
 import androidx.appcompat.app.AppCompatActivity;
 
 import iss.ad.team6.sharefood.fragment.EmptyFragment;
-import iss.ad.team6.sharefood.fragment.RManageAccountFragment;
+import iss.ad.team6.sharefood.fragment.GManageAccountFragment;
 import iss.ad.team6.sharefood.fragment.ShowPageFragment;
 import iss.ad.team6.sharefood.utils.Utils;
 import iss.ad.team6.sharefood.utils.tabhost.FragmentTabHost;
@@ -20,8 +20,8 @@ import iss.ad.team6.sharefood.utils.tabhost.OnTabActionListener;
 import iss.ad.team6.sharefood.utils.tabhost.TabHost;
 import iss.ad.team6.sharefood.utils.tabhost.TabWidget;
 
-public class RMainActivity extends AppCompatActivity implements OnTabActionListener {
-    public static String[] MAIN_MENU = {"Home", "Find Food", "Manage Account"};
+public class GMainActivity extends AppCompatActivity implements OnTabActionListener {
+    public static String[] MAIN_MENU = {"Home", "Create Food", "Manage Account"};
     private FragmentTabHost fragment_tab_host;
     private TabWidget tabWidget;
     //点击图片数组
@@ -38,7 +38,7 @@ public class RMainActivity extends AppCompatActivity implements OnTabActionListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.r_activity_main);
+        setContentView(R.layout.g_activity_main);
         initViews();
     }
 
@@ -67,7 +67,7 @@ public class RMainActivity extends AppCompatActivity implements OnTabActionListe
         i++;
         TabHost.TabSpec tabSpec_2 = fragment_tab_host.newTabSpec(i + "");
         tabSpec_2.setIndicator(getMenuView(i));
-        fragment_tab_host.addTab(tabSpec_2, RManageAccountFragment.class, null);
+        fragment_tab_host.addTab(tabSpec_2, GManageAccountFragment.class, null);
     }
 
     private View getMenuView(int position) {

@@ -14,15 +14,15 @@ import iss.ad.team6.sharefood.utils.Api;
 import iss.ad.team6.sharefood.utils.BaseActivity;
 import iss.ad.team6.sharefood.utils.HttpUtil;
 
-public class REditAccountActivity extends BaseActivity implements View.OnClickListener {
-    private static final String TAG = REditAccountActivity.class.getSimpleName();
+public class EditAccountActivity extends BaseActivity implements View.OnClickListener {
+    private static final String TAG = EditAccountActivity.class.getSimpleName();
     private String userId;
     private TextView btnNext;
     private EditText etUName, etPassword;
 
     @Override
     protected void initView() {
-        setContentView(R.layout.r_activity_edit_account);
+        setContentView(R.layout.activity_edit_account);
         btnNext = findViewById(R.id.btn_next);
         etUName = findViewById(R.id.et_uName);
         etPassword = findViewById(R.id.et_password);
