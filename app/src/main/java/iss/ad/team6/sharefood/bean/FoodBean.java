@@ -2,7 +2,9 @@ package iss.ad.team6.sharefood.bean;
 
 import com.google.gson.annotations.SerializedName;
 
-public class FoodBean {
+import java.io.Serializable;
+
+public class FoodBean implements Serializable {
     @SerializedName("foodId")
     private Long foodId;
 

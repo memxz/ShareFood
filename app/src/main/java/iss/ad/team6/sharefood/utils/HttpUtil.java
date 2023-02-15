@@ -244,6 +244,34 @@ public class HttpUtil {
         });
     }
 
+    public static void put_json(String url, Object params_obj, OnGetDataCallback callback) {
+        MediaType JSON = MediaType.parse("application/json;charset=utf-8");
+        OkHttpClient client = new OkHttpClient();
+        RequestBody requestBody = RequestBody.create(JSON, new Gson().toJson(params_obj));
+        Request request = new Request.Builder()
+                .url(url)
+                .addHeader("appSecret", "123456")
+                .addHeader("Content-Type", "application/json;charset=UTF-8")
+                .put(requestBody)
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                if (callback != null) {
+                    callback.onGetFailed(e.getMessage());
+                }
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String responseData = response.body().string();
+                if (callback != null) {
+                    callback.onGetSuccess(responseData);
+                }
+            }
+        });
+    }
+
     public interface OnGetDataCallback {
         void onGetSuccess(String json);
 

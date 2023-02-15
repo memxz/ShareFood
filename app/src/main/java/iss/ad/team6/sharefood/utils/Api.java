@@ -7,4 +7,5 @@ public class Api {
     public static final String api_edit_account = baseUrl + "/api/individual/update";
     public static final String api_history = baseUrl + "/api/food/get-list/collected";
     public static final String api_all = baseUrl + "/api/food/get-all";
+    public static final String api_edit_food = baseUrl + "/api/food/update";
 }

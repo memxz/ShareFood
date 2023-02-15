@@ -37,6 +37,7 @@
         <activity android:name=".HistoryActivity" />
         <activity android:name=".RFoodDetailActivity" />
         <activity android:name=".GEditFoodActivity" />
+        <activity android:name=".GEditFoodDetailActivity" />
 
         <activity
             android:name=".GMainActivity"
