@@ -4,7 +4,6 @@ import static android.content.Context.MODE_PRIVATE;
 import static androidx.databinding.DataBindingUtil.setContentView;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -28,17 +27,16 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 
-import android.Manifest;
 import android.widget.Toast;
 
-import iss.ad.team6.sharefood.LoginActivity;
+import iss.ad.team6.sharefood.MainActivity;
 import iss.ad.team6.sharefood.R;
 import iss.ad.team6.sharefood.bean.FoodBean;
 import iss.ad.team6.sharefood.bean.FoodType;
+import iss.ad.team6.sharefood.bean.LoginBean;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -47,14 +45,10 @@ import okhttp3.Response;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import com.squareup.picasso.MemoryPolicy;
-
-import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -74,7 +68,9 @@ public class AddFragment<OkHttpClient, FormBody> extends Fragment {
     Button createFood;
     Uri imageUri;
     ImageView foodImage;
-    public final String createFoodUrl="";
+    String encImg;
+    public final String createFoodUrl="https://card-service-cloudrun-lmgpq3qg3a-et.a.run.app/card-service/api/food/save";
+    public final String saveFoodImgUrl = "https://card-service-cloudrun-lmgpq3qg3a-et.a.run.app/card-service/api/food/image/upload";
 
     public AddFragment() {
     }
@@ -92,6 +88,12 @@ public class AddFragment<OkHttpClient, FormBody> extends Fragment {
                     }
                 }
             });
+
+    private void BackToPrevious()
+    {
+        Toast.makeText(getContext(),"Food Added",Toast.LENGTH_LONG).show();
+        ((MainActivity)getActivity()).explicitSwitchTab(0);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -161,6 +163,10 @@ public class AddFragment<OkHttpClient, FormBody> extends Fragment {
                     }
                     newFood.setListDays(listDays);
 
+                    SharedPreferences pref = getActivity().getSharedPreferences("loginsp",MODE_PRIVATE);
+                    String userJson = pref.getString("userBeanJson","");
+                    LoginBean user=new Gson().fromJson(userJson,LoginBean.class);
+                    newFood.setPublisher(user);
 
                     //EditText foodLocation;  wait for cyrus import google map sdk
                     String halaStatus="";
@@ -188,7 +194,7 @@ public class AddFragment<OkHttpClient, FormBody> extends Fragment {
                         Toast.makeText(getContext(),"No image!",Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    String encImg = "";
+                    encImg = "";
                     final InputStream imageStream;
                     try {
                         imageStream = getActivity().getContentResolver().openInputStream(imageUri);
@@ -209,22 +215,12 @@ public class AddFragment<OkHttpClient, FormBody> extends Fragment {
                     }
 
 
-
-
-                    // For test
-                    //final String userID = "9";
-                    SharedPreferences pref = getActivity().getSharedPreferences("loginsp", MODE_PRIVATE);
-                    final String userId=pref.getString("userId","");
-
                     Gson post=new Gson();
                     Map<String,Object> createFoodMap=new HashMap<String,Object>();
 
-                    createFoodMap.put("userId",userId);
-                    createFoodMap.put("newFood",newFood);
-                    createFoodMap.put("ImageEncode", encImg);
-                    String JsonStr=post.toJson(createFoodMap);
+                    String JsonStr=post.toJson(newFood);
                     String method = "POST";
-                    OkHttpHandler createHandler= new OkHttpHandler();
+                    SaveFoodHttpHandler createHandler= new SaveFoodHttpHandler();
                     createHandler.execute(createFoodUrl, method, JsonStr);
                 }
             });
@@ -232,7 +228,39 @@ public class AddFragment<OkHttpClient, FormBody> extends Fragment {
         return view;
     }
 
-    public class OkHttpHandler extends AsyncTask {
+    public class SaveFoodImgHttpHandler extends AsyncTask {
+        okhttp3.OkHttpClient client = new okhttp3.OkHttpClient();
+
+        @Override
+        protected Object doInBackground(Object[] params) {
+            String jsonStr = (String)params[0];
+            MediaType mediaType = MediaType.parse("application/json");
+            RequestBody body = RequestBody.create(mediaType, jsonStr);
+            Request request = new Request.Builder()
+                    .url(saveFoodImgUrl)
+                    .put(body)
+                    .addHeader("Content-Type", "application/json")
+                    .build();
+
+            try {
+                Response response = client.newCall(request).execute();
+                return response.body().string();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Object o) {
+            super.onPostExecute(o);
+            BackToPrevious();
+
+
+        }
+    }
+
+    public class SaveFoodHttpHandler extends AsyncTask {
         okhttp3.OkHttpClient client = new okhttp3.OkHttpClient();
 
 
@@ -267,6 +295,20 @@ public class AddFragment<OkHttpClient, FormBody> extends Fragment {
         @Override
         protected void onPostExecute(Object o) {
             super.onPostExecute(o);
+            FoodBean food;
+            String jsonStr = (String)o;
+            Gson gson=new GsonBuilder().disableHtmlEscaping().create();
+            food = gson.fromJson(jsonStr, FoodBean.class);
+
+            encImg = encImg.replace("\n", "");
+            Map<String,String> inputMap=new HashMap<String,String>();
+            inputMap.put("id", food.getFoodId().toString());
+            inputMap.put("base64", encImg);
+            jsonStr=gson.toJson(inputMap);
+
+            SaveFoodImgHttpHandler saveFoodImgHttpHandler = new SaveFoodImgHttpHandler();
+            saveFoodImgHttpHandler.execute(jsonStr);
+
             Log.d("successful", "successful");
         }
 

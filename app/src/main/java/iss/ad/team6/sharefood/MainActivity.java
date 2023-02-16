@@ -96,7 +96,14 @@ public class MainActivity extends AppCompatActivity implements OnTabActionListen
         switchTab();
     }
 
-    private void switchTab() {
+    public void explicitSwitchTab(int pos)
+    {
+        nowPosition = pos;
+        switchTab();
+    }
+
+
+    public void switchTab() {
         if (lastPosition != nowPosition) {
             lastPosition = nowPosition;
             tabWidget.focusCurrentTab(nowPosition);
