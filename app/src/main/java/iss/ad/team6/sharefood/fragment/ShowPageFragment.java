@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -56,7 +57,7 @@ public class ShowPageFragment extends Fragment implements AdapterView.OnItemClic
         View view = inflater.inflate(R.layout.activity_show_page, container, false);
         foodListView=view.findViewById(R.id.foodList);
         Button searchBtn=view.findViewById(R.id.searchBtn);
-
+        EditText input=view.findViewById(R.id.search);
         radioGroup=view.findViewById(R.id.radioGroup);
         if(searchBtn!=null)
         {
@@ -64,7 +65,7 @@ public class ShowPageFragment extends Fragment implements AdapterView.OnItemClic
                 @Override
                 public void onClick(View view) {
                     OkHttpHandler selectHandler=new OkHttpHandler();
-                    EditText input=view.findViewById(R.id.search);
+                    //EditText input=view.findViewById(R.id.search);
                     //String content=input.getText().toString();
                     String halaStatus=" ";
                     for(int i=0;i<radioGroup.getChildCount();i++)
@@ -179,13 +180,17 @@ public class ShowPageFragment extends Fragment implements AdapterView.OnItemClic
 
     private void refreshFoodList()
     {
-        Collections.shuffle(foodList);
+        if(foodList!=null){
+            Collections.shuffle(foodList);
+            selectedList = foodList.subList(0, Math.min(cSelectedListMaxSize, foodList.size()));
 
-        selectedList = foodList.subList(0, Math.min(cSelectedListMaxSize, foodList.size()));
-
-        FoodAdapter adapter=new FoodAdapter(ShowPageFragment.this,selectedList);
-        foodListView.setAdapter(adapter);
-        foodListView.setOnItemClickListener(ShowPageFragment.this);
+            FoodAdapter adapter=new FoodAdapter(ShowPageFragment.this,selectedList);
+            foodListView.setAdapter(adapter);
+            foodListView.setOnItemClickListener(ShowPageFragment.this);
+        }
+        else{
+            Toast.makeText(getActivity(),"No food item found",Toast.LENGTH_SHORT).show();
+        }
     }
 
 
