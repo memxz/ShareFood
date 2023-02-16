@@ -3,30 +3,41 @@ package iss.ad.team6.sharefood.utils;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
+import android.text.TextUtils;
 
 import java.util.Map;
 
 public class Utils {
-    public static String parseGetUrl(String url, Map<String, String> params){
+    public static String parseGetUrl(String url, Map<String, String> params) {
         StringBuilder builder = new StringBuilder(url);
-        if (params!=null){
+        if (params != null) {
             int num = 0;
             for (Map.Entry<String, String> entry : params.entrySet()) {
-                if (num == 0){
-                    builder.append("?"+entry.getKey()+"="+entry.getValue());
+                if (num == 0) {
+                    builder.append("?" + entry.getKey() + "=" + entry.getValue());
                     num++;
-                }else {
-                    builder.append("&"+entry.getKey()+"="+entry.getValue());
+                } else {
+                    builder.append("&" + entry.getKey() + "=" + entry.getValue());
                 }
             }
         }
 
         return builder.toString();
     }
+
     //newly add for parse api/{userId} format
-    public static String parseGetUrls(String url, Map<String, String> params){
+    public static String parseGetUrls(String url, Map<String, String> params) {
         StringBuilder builder = new StringBuilder(url);
-        if (params!=null){
+        if (params != null) {
+            /*for (Map.Entry<String, String> entry : params.entrySet()) {
+                if (url.contains("?")){
+                    builder.append("&");
+                    builder.append(entry.getKey()+"="+entry.getValue());
+                }else {
+                    builder.append("?");
+                    builder.append(entry.getKey()+"="+entry.getValue());
+                }
+            }*/
             int num = 0;
             for (Map.Entry<String, String> entry : params.entrySet()) {
                 if (num == 0){
@@ -40,6 +51,7 @@ public class Utils {
 
         return builder.toString();
     }
+
     public static ColorStateList getColorStateList(int normal, int pressed, int selected, int unable) {
         int[] colors = new int[]{pressed, pressed, selected, unable, normal};
         int[][] states = new int[5][];
@@ -51,6 +63,7 @@ public class Utils {
         ColorStateList colorList = new ColorStateList(states, colors);
         return colorList;
     }
+
     /**
      * 获取图片selector
      *
@@ -72,6 +85,14 @@ public class Utils {
         bg.addState(new int[]{android.R.attr.state_selected}, selected);
         bg.addState(new int[]{}, unabled);
         return bg;
+    }
+
+    public static boolean isNotEmptyStr(String str) {
+        return !TextUtils.isEmpty(str);
+    }
+
+    public static boolean isEmptyStr(String str) {
+        return TextUtils.isEmpty(str);
     }
 
 }
