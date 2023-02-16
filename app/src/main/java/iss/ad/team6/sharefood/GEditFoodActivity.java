@@ -88,7 +88,7 @@ public class GEditFoodActivity extends BaseActivity {
                     @Override
                     public void run() {
                         if (json == null || json.length() == 0) {
-                            showToast("cannot load history orders");
+                            showToast("cannot find list/unlist food items");
                             return;
                         }
                         if (json.contains("404")) {
