@@ -104,6 +104,7 @@ public class AddFragment<OkHttpClient, FormBody> extends Fragment {
         foodImage = view.findViewById(R.id.upload_image);
         imageUri = null;
         selectImg = view.findViewById(R.id.btn_select_image);
+        addRadioGroup=view.findViewById(R.id.add_food_type);
         if(selectImg!=null) {
             selectImg.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -170,11 +171,11 @@ public class AddFragment<OkHttpClient, FormBody> extends Fragment {
 
                     //EditText foodLocation;  wait for cyrus import google map sdk
                     String halaStatus="";
-                    addRadioGroup=view.findViewById(R.id.add_food_type);
+                    //addRadioGroup=view.findViewById(R.id.add_food_type);
                     for(int i=0;i<addRadioGroup.getChildCount();i++)
                     {
-                        if(addRadioGroup.getChildAt(i).getClass() != RadioButton.class)
-                            continue;
+                        /*if(addRadioGroup.getChildAt(i).getClass() != RadioButton.class)
+                            continue;*/
                         RadioButton addRb=(RadioButton) addRadioGroup.getChildAt(i);
                         if(addRb.isChecked())
                         {

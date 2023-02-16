@@ -114,22 +114,24 @@
                 android:id="@+id/add_food_type"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:gravity="center"
+                android:gravity="fill_horizontal"
                 android:layout_height="wrap_content">
                 <RadioButton
                     android:id="@+id/add_Halal"
                     android:text="Halal"
                     android:checked="true"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <Space
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"/>
+                <!--<Space
                     android:layout_width="40dp"
-                    android:layout_height="5dp"/>
+                    android:layout_height="5dp"/>-->
                 <RadioButton
                     android:id="@+id/add_non_halal"
                     android:text="Non-Halal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"/>
             </RadioGroup>
         </LinearLayout>
         <LinearLayout
