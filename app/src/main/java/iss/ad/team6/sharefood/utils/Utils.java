@@ -29,13 +29,22 @@ public class Utils {
     public static String parseGetUrls(String url, Map<String, String> params) {
         StringBuilder builder = new StringBuilder(url);
         if (params != null) {
-            for (Map.Entry<String, String> entry : params.entrySet()) {
+            /*for (Map.Entry<String, String> entry : params.entrySet()) {
                 if (url.contains("?")){
                     builder.append("&");
                     builder.append(entry.getKey()+"="+entry.getValue());
                 }else {
                     builder.append("?");
                     builder.append(entry.getKey()+"="+entry.getValue());
+                }
+            }*/
+            int num = 0;
+            for (Map.Entry<String, String> entry : params.entrySet()) {
+                if (num == 0){
+                    builder.append("/"+entry.getValue());
+                    num++;
+                }else {
+                    builder.append("");
                 }
             }
         }

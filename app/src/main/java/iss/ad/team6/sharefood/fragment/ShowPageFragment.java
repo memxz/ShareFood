@@ -38,15 +38,14 @@ import okhttp3.Response;
 
 public class ShowPageFragment extends Fragment implements AdapterView.OnItemClickListener {
 
-    public final String foodlistUrl = "https://card-service-cloudrun-lmgpq3qg3a-et.a.run.app/card-service/api/food/get-all";//https://v99xcpwju4.execute-api.ap-northeast-1.amazonaws.com/FoodDelieveryTest/getfoodlist/";
-    public final String searchUrl = "https://v99xcpwju4.execute-api.ap-northeast-1.amazonaws.com/FoodDelieveryTest/getsearchlist/";
+    public final String foodlistUrl ="https://card-service-cloudrun-lmgpq3qg3a-et.a.run.app/card-service/api/food/get-all";//https://v99xcpwju4.execute-api.ap-northeast-1.amazonaws.com/FoodDelieveryTest/getfoodlist/";
+    public final String searchUrl="https://card-service-cloudrun-lmgpq3qg3a-et.a.run.app/card-service/api/food/get-list/criteria";//https://v99xcpwju4.execute-api.ap-northeast-1.amazonaws.com/FoodDelieveryTest/getsearchlist/";
     ListView foodListView;
     List<FoodBean> foodList;
-    List<FoodBean> selectedList;
+    List<FoodBean>selectedList;
     RadioGroup radioGroup;
     RadioButton rb;
     final int cSelectedListMaxSize = 20;
-
     public ShowPageFragment() {
         // Required empty public constructor
     }
@@ -55,37 +54,47 @@ public class ShowPageFragment extends Fragment implements AdapterView.OnItemClic
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_show_page, container, false);
-        foodListView = view.findViewById(R.id.foodList);
-        Button searchBtn = view.findViewById(R.id.searchBtn);
-        if (searchBtn != null) {
+        View view = inflater.inflate(R.layout.activity_show_page, container, false);
+        foodListView=view.findViewById(R.id.foodList);
+        Button searchBtn=view.findViewById(R.id.searchBtn);
+
+        radioGroup=view.findViewById(R.id.radioGroup);
+        if(searchBtn!=null)
+        {
             searchBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    OkHttpHandler selectHandler = new OkHttpHandler();
-                    EditText input = view.findViewById(R.id.search);
-                    String content = input.getText().toString();
-                    String halaStatus = " ";
-                    radioGroup = view.findViewById(R.id.radioGroup);
-                    for (int i = 0; i < radioGroup.getChildCount(); i++) {
-                        RadioButton rb = (RadioButton) radioGroup.getChildAt(i);
-                        if (rb.isChecked()) {
-                            halaStatus = rb.getText().toString();
+                    OkHttpHandler selectHandler=new OkHttpHandler();
+                    EditText input=view.findViewById(R.id.search);
+                    //String content=input.getText().toString();
+                    String halaStatus=" ";
+                    for(int i=0;i<radioGroup.getChildCount();i++)
+                    {
+                        RadioButton rb=(RadioButton) radioGroup.getChildAt(i);
+                        if(rb.isChecked())
+                        {
+                            halaStatus=rb.getText().toString();
                         }
                     }
-                    Gson post = new Gson();
-                    Map<String, String> inputMap = new HashMap<String, String>();
-                    inputMap.put("Status", halaStatus);
-                    inputMap.put("search", content);
-                    String JsonStr = post.toJson(inputMap);
+                    Gson post=new Gson();
+                    Map<String,String> inputMap=new HashMap<String,String>();
+                    if(input!=null){
+                        String content=input.getText().toString();
+                        inputMap.put("status",halaStatus);
+                        inputMap.put("search",content);
+                    }else {
+                        inputMap.put("status",halaStatus);
+                    }
+                    String JsonStr=post.toJson(inputMap);
                     String method = "POST";
                     selectHandler.execute(searchUrl, method, JsonStr);
                 }
             });
         }
 
-        Button refreshButton = view.findViewById(R.id.refreshButton);
-        if (refreshButton != null) {
+        Button refreshButton=view.findViewById(R.id.refreshButton);
+        if(refreshButton != null)
+        {
             refreshButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -94,22 +103,21 @@ public class ShowPageFragment extends Fragment implements AdapterView.OnItemClic
             });
         }
 
-        OkHttpHandler defaultHandler = new OkHttpHandler();
+        OkHttpHandler defaultHandler=new OkHttpHandler();
 
         // For test
         //final String userID = "9";
         SharedPreferences pref = this.getActivity().getSharedPreferences("loginsp", MODE_PRIVATE);
-        final String userID = pref.getString("userId", "");
+        final String userID=pref.getString("userId","");
 
-        Map<String, String> inputMap = new HashMap<String, String>();
-        inputMap.put("userID", userID);
+        Map<String,String> inputMap=new HashMap<String,String>();
+        inputMap.put("userID",userID);
         Gson gson = new Gson();
         final String json = gson.toJson(inputMap);
         String method = "GET";
         defaultHandler.execute(foodlistUrl, method, json);
         return view;
     }
-
     public class OkHttpHandler extends AsyncTask {
 
         OkHttpClient client = new OkHttpClient();
@@ -122,10 +130,13 @@ public class ShowPageFragment extends Fragment implements AdapterView.OnItemClic
             Request.Builder builder = new Request.Builder();
             builder.url((String) params[0]);
             String method = (String) params[1];
-            if (method == "GET") {
+            if(method == "GET")
+            {
                 // Do nothing
-            } else if (method == "POST") {
-                String json = (String) params[2];
+            }
+            else if(method == "POST")
+            {
+                String json = (String)params[2];
                 builder.post(RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json));
             }
 
@@ -134,7 +145,7 @@ public class ShowPageFragment extends Fragment implements AdapterView.OnItemClic
             try {
                 Response response = client.newCall(request).execute();
                 return response.body().string();
-            } catch (Exception e) {
+            }catch (Exception e){
                 e.printStackTrace();
             }
             return null;
@@ -143,11 +154,11 @@ public class ShowPageFragment extends Fragment implements AdapterView.OnItemClic
         @Override
         protected void onPostExecute(Object o) {
             super.onPostExecute(o);
-            String result = (String) o;
-            Gson gson = new Gson();
+            String result= (String) o;
+            Gson gson=new Gson();
 
-            foodList = gson.fromJson(result, new TypeToken<List<FoodBean>>() {
-            }.getType());
+            foodList=gson.fromJson(result,new TypeToken<List<FoodBean>>()
+            {}.getType());
 
             refreshFoodList();
         }
@@ -167,15 +178,18 @@ public class ShowPageFragment extends Fragment implements AdapterView.OnItemClic
         startActivity(intent);
     }
 
-    private void refreshFoodList() {
+    private void refreshFoodList()
+    {
         Collections.shuffle(foodList);
 
         selectedList = foodList.subList(0, Math.min(cSelectedListMaxSize, foodList.size()));
 
-        FoodAdapter adapter = new FoodAdapter(ShowPageFragment.this, selectedList);
+        FoodAdapter adapter=new FoodAdapter(ShowPageFragment.this,selectedList);
         foodListView.setAdapter(adapter);
         foodListView.setOnItemClickListener(ShowPageFragment.this);
     }
+
+
 
 
 }

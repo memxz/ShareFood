@@ -23,29 +23,31 @@ public class FoodAdapter extends ArrayAdapter<FoodBean> {
 
 
     public FoodAdapter(ShowPageFragment context, List<FoodBean> foodList) {
-        super(context.getActivity(), 0, foodList);
+        super(context.getActivity(), 0,foodList);
         this.context = context;
-        this.foodList = foodList;
+        this.foodList=foodList;
     }
-
-    public View getView(int position, View view, @NotNull ViewGroup parent) {
-        if (view == null) {
-            view = LayoutInflater.from(getContext()).inflate(R.layout.adapter_food, parent, false);
+    public View getView(int position, View view, @NotNull ViewGroup parent)
+    {
+        if(view==null)
+        {
+            view= LayoutInflater.from(getContext()).inflate(R.layout.show_food_list,parent,false);
         }
-        ImageView imageView = view.findViewById(R.id.imageview);
+        ImageView imageView= view.findViewById(R.id.imageview);
         //int id=context.getResources().getIdentifier(foodList.get(position).getImg(),"drawable", context.getPackageName());//暂时用该方法，图片处理还需要考虑
         //imageView.setImageResource(id);
         String imageUrl = foodList.get(position).getImgUrl();
         Picasso.with(context.getContext()).load(imageUrl).resize(100, 100).into(imageView);
 
-        TextView title = view.findViewById(R.id.foodName);
+        TextView title=view.findViewById(R.id.foodName);
         title.setText(foodList.get(position).getTitle());
 
-        TextView description = view.findViewById(R.id.foodDescription);
+        TextView description=view.findViewById(R.id.foodDescription);
         description.setText(foodList.get(position).getDescription());
 
         return view;
     }
+
 
 
 }
