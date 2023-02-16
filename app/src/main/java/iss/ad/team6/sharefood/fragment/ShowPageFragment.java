@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -179,13 +180,17 @@ public class ShowPageFragment extends Fragment implements AdapterView.OnItemClic
 
     private void refreshFoodList()
     {
-        Collections.shuffle(foodList);
+        if(foodList!=null){
+            Collections.shuffle(foodList);
+            selectedList = foodList.subList(0, Math.min(cSelectedListMaxSize, foodList.size()));
 
-        selectedList = foodList.subList(0, Math.min(cSelectedListMaxSize, foodList.size()));
-
-        FoodAdapter adapter=new FoodAdapter(ShowPageFragment.this,selectedList);
-        foodListView.setAdapter(adapter);
-        foodListView.setOnItemClickListener(ShowPageFragment.this);
+            FoodAdapter adapter=new FoodAdapter(ShowPageFragment.this,selectedList);
+            foodListView.setAdapter(adapter);
+            foodListView.setOnItemClickListener(ShowPageFragment.this);
+        }
+        else{
+            Toast.makeText(getActivity(),"No food item found",Toast.LENGTH_SHORT).show();
+        }
     }
 
 
