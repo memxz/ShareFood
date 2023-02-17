@@ -29,8 +29,11 @@ import androidx.fragment.app.Fragment;
 
 import android.widget.Toast;
 
+import iss.ad.team6.sharefood.LoginActivity;
 import iss.ad.team6.sharefood.MainActivity;
+import iss.ad.team6.sharefood.MyLocationActivity;
 import iss.ad.team6.sharefood.R;
+import iss.ad.team6.sharefood.RegisterActivity;
 import iss.ad.team6.sharefood.bean.FoodBean;
 import iss.ad.team6.sharefood.bean.FoodType;
 import iss.ad.team6.sharefood.bean.LoginBean;
@@ -69,6 +72,8 @@ public class AddFragment<OkHttpClient, FormBody> extends Fragment {
     Uri imageUri;
     ImageView foodImage;
     String encImg;
+    ImageView imageView;
+    EditText et_foodLocation;
     public final String createFoodUrl="https://card-service-cloudrun-lmgpq3qg3a-et.a.run.app/card-service/api/food/save";
     public final String saveFoodImgUrl = "https://card-service-cloudrun-lmgpq3qg3a-et.a.run.app/card-service/api/food/image/upload";
 
@@ -105,6 +110,16 @@ public class AddFragment<OkHttpClient, FormBody> extends Fragment {
         imageUri = null;
         selectImg = view.findViewById(R.id.btn_select_image);
         addRadioGroup=view.findViewById(R.id.add_food_type);
+        imageView=view.findViewById(R.id.clickMap);
+        et_foodLocation=view.findViewById(R.id.add_food_location);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Jump to mylocationactivity
+                Intent intent = new Intent(AddFragment.this.getActivity(), MyLocationActivity.class);
+                startActivity(intent);
+            }
+        });
         if(selectImg!=null) {
             selectImg.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -167,9 +182,28 @@ public class AddFragment<OkHttpClient, FormBody> extends Fragment {
                     SharedPreferences pref = getActivity().getSharedPreferences("loginsp",MODE_PRIVATE);
                     String userJson = pref.getString("userBeanJson","");
                     LoginBean user=new Gson().fromJson(userJson,LoginBean.class);
+                    double latitude=pref.getFloat("Latitude",0);
+                    double longitude=pref.getFloat("Longitude",0);
                     newFood.setPublisher(user);
 
+                    if(latitude==0 || longitude==0){
+                        Toast.makeText(getContext(),"Cannnot get your current location , pls click to navigate",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    Log.d("111111 Lag_long",latitude+"-"+longitude);
+                    newFood.setLatitude(latitude);
+                    newFood.setLongitude(longitude);
+                    Log.d("111111 Lag_long2",newFood.getLatitude()+"-"+newFood.getLongitude());
                     //EditText foodLocation;  wait for cyrus import google map sdk
+                    String fdLocation=et_foodLocation.getText().toString();
+                    if(fdLocation.equals(""))
+                    {
+                        Toast.makeText(getContext(),"PostCode cannot be empty and must be 6 digit number",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    newFood.setFoodLocation(fdLocation);
+                    newFood.setListed(true);
+                    newFood.setDescription(foodDes);
                     String halaStatus="";
                     //addRadioGroup=view.findViewById(R.id.add_food_type);
                     for(int i=0;i<addRadioGroup.getChildCount();i++)
@@ -221,6 +255,8 @@ public class AddFragment<OkHttpClient, FormBody> extends Fragment {
 
                     String JsonStr=post.toJson(newFood);
                     String method = "POST";
+                    Log.d("111111 Lag_long3",JsonStr);
+
                     SaveFoodHttpHandler createHandler= new SaveFoodHttpHandler();
                     createHandler.execute(createFoodUrl, method, JsonStr);
                 }
@@ -237,6 +273,7 @@ public class AddFragment<OkHttpClient, FormBody> extends Fragment {
             String jsonStr = (String)params[0];
             MediaType mediaType = MediaType.parse("application/json");
             RequestBody body = RequestBody.create(mediaType, jsonStr);
+            Log.d("111111 Lag_long4",jsonStr);
             Request request = new Request.Builder()
                     .url(saveFoodImgUrl)
                     .put(body)
