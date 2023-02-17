@@ -144,6 +144,8 @@ public class AddFragment<OkHttpClient, FormBody> extends Fragment implements OnM
     private String[] likelyPlaceAddresses;
     private List[] likelyPlaceAttributions;
     private LatLng[] likelyPlaceLatLngs;
+    double lat;
+    double lng;
     //end maprelated
     FoodBean newFood;
     EditText foodTitle;
@@ -157,6 +159,7 @@ public class AddFragment<OkHttpClient, FormBody> extends Fragment implements OnM
     Uri imageUri;
     ImageView foodImage;
     String encImg;
+    EditText et_foodLocation;
     public final String createFoodUrl = "https://card-service-cloudrun-lmgpq3qg3a-et.a.run.app/card-service/api/food/save";
     public final String saveFoodImgUrl = "https://card-service-cloudrun-lmgpq3qg3a-et.a.run.app/card-service/api/food/image/upload";
 
@@ -227,6 +230,7 @@ public class AddFragment<OkHttpClient, FormBody> extends Fragment implements OnM
         imageUri = null;
         selectImg = view.findViewById(R.id.btn_select_image);
         addRadioGroup = view.findViewById(R.id.add_food_type);
+        et_foodLocation=view.findViewById(R.id.add_food_location);
         if (selectImg != null) {
             selectImg.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -287,6 +291,22 @@ public class AddFragment<OkHttpClient, FormBody> extends Fragment implements OnM
                     newFood.setPublisher(user);
 
                     //EditText foodLocation;  wait for cyrus import google map sdk
+                    String fdLocation=et_foodLocation.getText().toString();
+                    if(fdLocation.equals(""))
+                    {
+                        Toast.makeText(getContext(),"PostCode cannot be empty and must be 6 digit number",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    if(lat==0 || lng==0){
+                        Toast.makeText(getContext(),"Cannnot get your current location , pls click to navigate",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    Log.d("111111 Lag_long",lat+"-"+lng);
+                    newFood.setLatitude(lat);
+                    newFood.setLongitude(lng);
+                    Log.d("111111 Lag_long2",newFood.getLatitude()+"-"+newFood.getLongitude());
+                    newFood.setFoodLocation(fdLocation);
+                    newFood.setListed(true);
                     String halaStatus = "";
                     //addRadioGroup=view.findViewById(R.id.add_food_type);
                     for (int i = 0; i < addRadioGroup.getChildCount(); i++) {
@@ -336,6 +356,7 @@ public class AddFragment<OkHttpClient, FormBody> extends Fragment implements OnM
 
                     String JsonStr = post.toJson(newFood);
                     String method = "POST";
+                    Log.d("111111 Lag_long3",JsonStr);
                     SaveFoodHttpHandler createHandler = new SaveFoodHttpHandler();
                     createHandler.execute(createFoodUrl, method, JsonStr);
                 }
@@ -747,8 +768,7 @@ public class AddFragment<OkHttpClient, FormBody> extends Fragment implements OnM
         Geocoder geocoder;
         String bestProvider;
         List<Address> user = null;
-        double lat;
-        double lng;
+
 
         LocationManager lm = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
 
