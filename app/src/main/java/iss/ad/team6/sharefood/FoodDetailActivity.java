@@ -413,8 +413,14 @@ public class FoodDetailActivity extends AppCompatActivity implements OnMapReadyC
      */
     @Override
     public void onMapReady(GoogleMap map) {
-        //pickLocation= new LatLng(responseData.getLatitude(),responseData.getLongitude());
-        pickLocation= new LatLng(1.3742107305278901, 103.76726999611022);
+        try {
+            Thread.sleep(00);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Log.d("11111responseData",responseData.getLatitude()+"-"+responseData.getLongitude());
+        pickLocation= new LatLng(responseData.getLatitude(),responseData.getLongitude());
+        //pickLocation= new LatLng(1.3742107305278901, 103.76726999611022);
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(pickLocation, 18));
         //map.animateCamera(CameraUpdateFactory.newLatLngZoom(SFO,14));
         map.addMarker(new MarkerOptions().position(pickLocation).title("Pick-up Point"));
