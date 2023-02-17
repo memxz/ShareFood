@@ -32,6 +32,7 @@ import androidx.fragment.app.Fragment;
 
 import android.widget.Toast;
 
+import iss.ad.team6.sharefood.BuildConfig;
 import iss.ad.team6.sharefood.MainActivity;
 import iss.ad.team6.sharefood.R;
 import iss.ad.team6.sharefood.bean.FoodBean;
@@ -210,7 +211,7 @@ public class AddFragment<OkHttpClient, FormBody> extends Fragment implements OnM
         View view = inflater.inflate(R.layout.activity_addfood, container, false);
         // [START_EXCLUDE silent]
         // Construct a PlacesClient
-        Places.initialize(getContext(), getString(R.string.MAPS_API_KEY));
+        Places.initialize(getContext(), BuildConfig.MAP_KEY);
         placesClient = Places.createClient(getContext());
 
         // Construct a FusedLocationProviderClient.
