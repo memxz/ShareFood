@@ -151,7 +151,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginTop="8dp"
-                android:hint="enter food description"
+                android:hint="enter food list days"
                 android:imeOptions="actionNext"
                 android:inputType="text"
                 android:lines="1"
