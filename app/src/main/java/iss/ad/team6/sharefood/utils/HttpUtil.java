@@ -1,21 +1,18 @@
 package iss.ad.team6.sharefood.utils;
-import android.nfc.Tag;
+
 import android.os.Handler;
 import android.os.Looper;
-import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.Map;
 
-import iss.ad.team6.sharefood.bean.LoginBean;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -24,13 +21,14 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+
 public class HttpUtil {
 
     public static OkHttpClient client = new OkHttpClient();
     public static Handler mHandler = new Handler(Looper.getMainLooper());
 
     public static void get(String url, Map<String, String> params, OnGetDataCallback callback) {
-        String parseUrl = Utils.parseGetUrl(url,params);
+        String parseUrl = Utils.parseGetUrl(url, params);
         Request request = new Request.Builder().url(parseUrl).build();
         Call call = client.newCall(request);
         call.enqueue(new Callback() {
@@ -39,19 +37,20 @@ public class HttpUtil {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        if (callback!=null){
+                        if (callback != null) {
                             callback.onGetFailed(e.getMessage());
                         }
                     }
                 });
             }
+
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 String json = response.body().string();
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        if (callback!=null){
+                        if (callback != null) {
                             callback.onGetSuccess(json);
                         }
                     }
@@ -62,7 +61,7 @@ public class HttpUtil {
     }
 
     public static void get2(String url, Map<String, String> params, OnGetDataCallback callback) {
-        String parseUrl = Utils.parseGetUrls(url,params);
+        String parseUrl = Utils.parseGetUrls(url, params);
         Request request = new Request.Builder().url(parseUrl).build();
         Call call = client.newCall(request);
         call.enqueue(new Callback() {
@@ -71,19 +70,20 @@ public class HttpUtil {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        if (callback!=null){
+                        if (callback != null) {
                             callback.onGetFailed(e.getMessage());
                         }
                     }
                 });
             }
+
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 String json = response.body().string();
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        if (callback!=null){
+                        if (callback != null) {
                             callback.onGetSuccess(json);
                         }
                     }
@@ -95,9 +95,9 @@ public class HttpUtil {
 
     public static void post(String url, Map<String, String> params, OnGetDataCallback callback) {
         FormBody.Builder builder = new FormBody.Builder();
-        if (params!=null){
-            for (String key:params.keySet()){
-                builder.add(key,params.get(key));
+        if (params != null) {
+            for (String key : params.keySet()) {
+                builder.add(key, params.get(key));
             }
         }
         RequestBody requestBody = builder.build();
@@ -109,7 +109,7 @@ public class HttpUtil {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        if (callback!=null){
+                        if (callback != null) {
                             callback.onGetFailed(e.getMessage());
                         }
                     }
@@ -119,7 +119,7 @@ public class HttpUtil {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                if(response.code() == 201) {
+                if (response.code() == 201) {
                     String json = response.body().string();
                     mHandler.post(new Runnable() {
                         @Override
@@ -129,15 +129,12 @@ public class HttpUtil {
                             }
                         }
                     });
-                }
-                else if(response.code() == 204) {
-                    Log.d("111111","Field input got authentication or verification issue, pls change your input");
-                }
-                else if(response.code() == 200){
-                    Log.d("111111","Request successfully but user account is not created successfully");
-                }
-                else{
-                    Log.d("111111","connection to backend failed");
+                } else if (response.code() == 204) {
+                    Log.d("111111", "Field input got authentication or verification issue, pls change your input");
+                } else if (response.code() == 200) {
+                    Log.d("111111", "Request successfully but user account is not created successfully");
+                } else {
+                    Log.d("111111", "connection to backend failed");
                 }
             }
         });
@@ -145,12 +142,12 @@ public class HttpUtil {
 
     @Deprecated
     //not effect
-    public static void post_json_bak(String url,Map<String,String> params,OnGetDataCallback callback){
+    public static void post_json_bak(String url, Map<String, String> params, OnGetDataCallback callback) {
         MediaType JSON = MediaType.parse("application/json;charset=utf-8");
         //JSONObject json = new JSONObject();
         String json = "";
         try {
-            if (params!=null){
+            if (params != null) {
                 /*for (String key:params.keySet()){
                     json.put(key,params.get(key));
                 }*/
@@ -178,7 +175,7 @@ public class HttpUtil {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        if (callback!=null){
+                        if (callback != null) {
                             callback.onGetFailed(e.getMessage());
                         }
                     }
@@ -188,7 +185,7 @@ public class HttpUtil {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                if(response.code() == 201) {
+                if (response.code() == 201) {
                     String json = response.body().string();
                     mHandler.post(new Runnable() {
                         @Override
@@ -198,51 +195,77 @@ public class HttpUtil {
                             }
                         }
                     });
-                }
-                else if(response.code() == 204) {
-                    Log.d("111111","Field input got authentication or verification issue, pls change your input");
-                }
-                else if(response.code() == 200){
-                    Log.d("111111","Request successfully but user account is not created successfully");
-                }
-                else{
-                    Log.d("111111","connection to backend failed");
+                } else if (response.code() == 204) {
+                    Log.d("111111", "Field input got authentication or verification issue, pls change your input");
+                } else if (response.code() == 200) {
+                    Log.d("111111", "Request successfully but user account is not created successfully");
+                } else {
+                    Log.d("111111", "connection to backend failed");
                 }
             }
         });
     }
-    public static void post_json(String url,Map<String,Object> params,OnGetDataCallback callback){
-        MediaType JSON=MediaType.parse("application/json;charset=utf-8");
-        JSONObject jsJson=new JSONObject();
+
+    public static void post_json(String url, Map<String, Object> params, OnGetDataCallback callback) {
+        MediaType JSON = MediaType.parse("application/json;charset=utf-8");
+        JSONObject jsJson = new JSONObject();
         try {
-            if (params!=null){
-                for (String key:params.keySet()){
-                    jsJson.put(key,params.get(key));
+            if (params != null) {
+                for (String key : params.keySet()) {
+                    jsJson.put(key, params.get(key));
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        OkHttpClient client=new OkHttpClient();
-        RequestBody requestBody=RequestBody.create(JSON,String.valueOf(jsJson));
-        Request request=new Request.Builder()
+        OkHttpClient client = new OkHttpClient();
+        RequestBody requestBody = RequestBody.create(JSON, String.valueOf(jsJson));
+        Request request = new Request.Builder()
                 .url(url)
-                .addHeader("appSecret","123456")
+                .addHeader("appSecret", "123456")
                 .addHeader("Content-Type", "application/json;charset=UTF-8")
                 .post(requestBody)
                 .build();
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                if (callback!=null){
+                if (callback != null) {
                     callback.onGetFailed(e.getMessage());
                 }
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                final String responseData=response.body().string();
-                if (callback!=null){
+                final String responseData = response.body().string();
+                if (callback != null) {
+                    callback.onGetSuccess(responseData);
+                }
+            }
+        });
+    }
+
+    public static void put_json(String url, Object params_obj, OnGetDataCallback callback) {
+        MediaType JSON = MediaType.parse("application/json;charset=utf-8");
+        OkHttpClient client = new OkHttpClient();
+        RequestBody requestBody = RequestBody.create(JSON, new Gson().toJson(params_obj));
+        Request request = new Request.Builder()
+                .url(url)
+                .addHeader("appSecret", "123456")
+                .addHeader("Content-Type", "application/json;charset=UTF-8")
+                .put(requestBody)
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                if (callback != null) {
+                    callback.onGetFailed(e.getMessage());
+                }
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String responseData = response.body().string();
+                if (callback != null) {
                     callback.onGetSuccess(responseData);
                 }
             }

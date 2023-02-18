@@ -4,7 +4,9 @@ import android.location.Location;
 
 import com.google.gson.annotations.SerializedName;
 
-public class FoodBean {
+import java.io.Serializable;
+
+public class FoodBean implements Serializable {
     @SerializedName("foodId")
     private Long foodId;
 
@@ -30,8 +32,8 @@ public class FoodBean {
     @SerializedName("isListed")
     private boolean isListed;
 
-//    @SerializedName("foodLocation")
-//    private Location foodLocation;
+    @SerializedName("foodLocation")
+    private String foodLocation;
 
     @SerializedName("img")
     private String imgUrl;
@@ -112,13 +114,13 @@ public class FoodBean {
         isListed = listed;
     }
 
-//    public Location getFoodLocation() {
-//        return foodLocation;
-//    }
-//
-//    public void setFoodLocation(Location foodLocation) {
-//        this.foodLocation = foodLocation;
-//    }
+    public String getFoodLocation() {
+        return foodLocation;
+    }
+
+    public void setFoodLocation(String foodLocation) {
+        this.foodLocation = foodLocation;
+    }
 
     public String getImgUrl() {
         return imgUrl;

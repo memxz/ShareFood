@@ -8,11 +8,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import iss.ad.team6.sharefood.fragment.EmptyFragment;
+import iss.ad.team6.sharefood.fragment.AddFragment;
 import iss.ad.team6.sharefood.fragment.ManageAccountFragment;
 import iss.ad.team6.sharefood.fragment.ShowPageFragment;
 import iss.ad.team6.sharefood.utils.Utils;
@@ -22,13 +21,13 @@ import iss.ad.team6.sharefood.utils.tabhost.TabHost;
 import iss.ad.team6.sharefood.utils.tabhost.TabWidget;
 
 public class MainActivity extends AppCompatActivity implements OnTabActionListener {
-    public static String[] MAIN_MENU = {"Home", "Find Food","Manage Account"};
+    public static String[] MAIN_MENU = {"Home", "Add Food","Manage Account"};
     private FragmentTabHost fragment_tab_host;
     private TabWidget tabWidget;
     //点击图片数组
-    private int[] menu_on_ids = {R.mipmap.icon_home, R.mipmap.icon_search, R.mipmap.icon_me,};
+    private int[] menu_on_ids = {R.mipmap.icon_home, R.mipmap.icon_add, R.mipmap.icon_me,};
     //默认图片数组
-    private int[] menu_nol_ids = {R.mipmap.icon_home, R.mipmap.icon_search, R.mipmap.icon_me,};
+    private int[] menu_nol_ids = {R.mipmap.icon_home, R.mipmap.icon_add, R.mipmap.icon_me,};
 
     private String[] menu_str_arr;
     private
@@ -62,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements OnTabActionListen
         i++;
         TabHost.TabSpec tabSpec_1 = fragment_tab_host.newTabSpec(i + "");
         tabSpec_1.setIndicator(getMenuView(i));
-        fragment_tab_host.addTab(tabSpec_1, EmptyFragment.class, null);
+        fragment_tab_host.addTab(tabSpec_1, AddFragment.class, null);
 
         i++;
         TabHost.TabSpec tabSpec_2 = fragment_tab_host.newTabSpec(i + "");
@@ -97,7 +96,14 @@ public class MainActivity extends AppCompatActivity implements OnTabActionListen
         switchTab();
     }
 
-    private void switchTab() {
+    public void explicitSwitchTab(int pos)
+    {
+        nowPosition = pos;
+        switchTab();
+    }
+
+
+    public void switchTab() {
         if (lastPosition != nowPosition) {
             lastPosition = nowPosition;
             tabWidget.focusCurrentTab(nowPosition);

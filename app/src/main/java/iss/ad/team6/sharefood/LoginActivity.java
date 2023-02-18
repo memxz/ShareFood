@@ -199,6 +199,7 @@ public class LoginActivity extends AppCompatActivity {
                                 //newly add for detailActivity
                                 editor.putString("userId",bean.getUserId().toString());
                                 editor.putString("userName",bean.getUserName());
+                                editor.putString("userBeanJson", responseData);
                                 editor.commit();
 
                                 Log.d("111111 main activity >>>","getAccess_token: "+pref.getString("token",""));

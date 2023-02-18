@@ -54,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="halal"
-            android:checked="true"
+            android:checked="false"
             tools:layout_editor_absoluteX="320dp"
             tools:layout_editor_absoluteY="58dp" />
 
@@ -65,7 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="false"
-            android:text="non-halal"
+            android:text="nonhalal"
             tools:layout_editor_absoluteX="163dp"
             tools:layout_editor_absoluteY="58dp" />
 
@@ -75,7 +75,7 @@
             android:layout_marginRight="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="false"
+            android:checked="true"
             android:text="all"
             tools:layout_editor_absoluteX="163dp"
             tools:layout_editor_absoluteY="58dp" />
